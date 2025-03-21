@@ -23,7 +23,7 @@
             <main class="content px-3 py-4">
                 <div class="container-fluid">
                     <div class="mb-3">
-                        <h3 class="fw-bold fs-4 mb-3">Trang quản lý admin</h3>
+                        <h3 class="fw-bold fs-4 mb-4">Thống kê</h3>
                         <div class="row">
                             <div class="col-xl-4 col-md-6">
                                 <div class="card bg-primary text-white mb-4">
@@ -57,54 +57,7 @@
                             </div>
                         </div>
                         <hr>
-                        <h3 class="fw-bold fs-4 my-3">User table</h3>
-                        <div class="row">
-                            <div class="col-12 mx-auto">
-                                <table class="table table-striped">
-                                    <thead>
-                                        <tr class="highlight">
-                                            <th scope="col">Id</th>
-                                            <th scope="col">Tên</th>
-                                            <th scope="col">Email</th>
-                                            <th scope="col">Xử lý</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        <tr>
-                                            <th scope="row">1</th>
-                                            <td>m</td>
-                                            <td>nam@gmail.com</td>
-                                            <td>
-                                                <a href="/admin/product/${product.id}" class="btn btn-success">View</a>
-                                                <a href="/admin/product/update/${product.id}" class="btn btn-warning mx-2">Update</a>
-                                                <a href="/admin/product/delete/${product.id}" class="btn btn-danger">Delete</a>
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <th scope="row">2</th>
-                                            <td>Nam</td>
-                                            <td>nam@gmail.com</td>
-                                            <td>
-                                                <a href="/admin/product/${product.id}" class="btn btn-success">View</a>
-                                                <a href="/admin/product/update/${product.id}" class="btn btn-warning mx-2">Update</a>
-                                                <a href="/admin/product/delete/${product.id}" class="btn btn-danger">Delete</a>
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <th scope="row">3</th>
-                                            <td>Nam</td>
-                                            <td>nam@gmail.com</td>
-                                            <td>
-                                                <a href="/admin/product/${product.id}" class="btn btn-success">View</a>
-                                                <a href="/admin/product/update/${product.id}" class="btn btn-warning mx-2">Update</a>
-                                                <a href="/admin/product/delete/${product.id}" class="btn btn-danger">Delete</a>
-                                            </td>
-                                        </tr>
-                                    </tbody>
-                                </table>
-                            </div>
-                        </div>
-                    </div>
+                        
                 </div>
             </main>
         </div>

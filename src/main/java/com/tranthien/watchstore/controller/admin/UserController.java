@@ -1,6 +1,5 @@
 package com.tranthien.watchstore.controller.admin;
 
-import java.lang.reflect.Field;
 import java.util.List;
 
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -14,7 +13,6 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
-
 import com.tranthien.watchstore.domain.Role;
 import com.tranthien.watchstore.domain.User;
 import com.tranthien.watchstore.service.UploadFileService;
@@ -36,13 +34,16 @@ public class UserController {
     }
 
     @GetMapping("/admin/user")
-    public String getUserPage() {
+    public String getUserPage(Model model) {
+        List<User> users = this.userService.fetchUser();
+        model.addAttribute("users", users);
         return "admin/user/show";
     }
 
     @GetMapping("/admin/user/{id}")
     public String getUserDetailPage(Model model, @PathVariable long id){
-        User user = null;
+        User user = this.userService.getUserById(id);
+        model.addAttribute("user", user);
         return "admin/user/detail";
     }
 
@@ -63,6 +64,11 @@ public class UserController {
             return "admin/user/create";
         }
 
+        if (this.userService.checkEmailExist(user.getEmail())){
+            bindingResult.rejectValue("email", "", "Existed email!");
+            return "admin/user/create";
+        }
+
         String avatar = this.uploadFileService.handleSaveUploadedFile(file, "avatar");
         Role role = this.userService.getRoleByName(user.getRole().getName());
         String hashedPassword = this.passwordEncoder.encode(user.getPassword());
@@ -75,4 +81,42 @@ public class UserController {
 
         return "redirect:/admin/user";
     }
+
+    @GetMapping("admin/user/update/{id}")
+    public String getUpdatePage(Model model, @PathVariable long id){
+        User user = this.userService.getUserById(id);
+        model.addAttribute("newUser", user);
+        return "admin/user/update";
+    }
+
+    @PostMapping("admin/user/update")
+    public String updateUser(Model model, @ModelAttribute("newUser")User updatedUser, BindingResult bindingResult, @RequestParam("avatarImg") MultipartFile file){
+        
+        User currentUser = this.userService.getUserById(updatedUser.getId());
+
+        if (currentUser != null){
+            currentUser.setPhone(updatedUser.getPhone());
+            currentUser.setAddress(updatedUser.getAddress());
+            currentUser.setFullName(updatedUser.getFullName());
+            currentUser.setRole(this.userService.getRoleByName(updatedUser.getRole().getName()));
+
+            if (!file.isEmpty()) {
+                // Xử lý upload file và cập nhật avatar
+                String avatar = this.uploadFileService.handleSaveUploadedFile(file, "avatar");
+                currentUser.setAvatar(avatar); // Cập nhật avatar mới
+            }
+
+            this.userService.handleSaveUser(currentUser);
+        }
+
+        
+        return "redirect:/admin/user";
+    }
+
+    @PostMapping("/admin/user/delete")
+    public String deleteUser(@RequestParam("id") Long id){
+        this.userService.handleDeleteUserById(id);
+        return "redirect:/admin/user";
+    }
+
 }

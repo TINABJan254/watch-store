@@ -1,7 +1,8 @@
 package com.tranthien.watchstore.service;
 
-import org.springframework.stereotype.Service;
+import java.util.List;
 
+import org.springframework.stereotype.Service;
 import com.tranthien.watchstore.domain.Role;
 import com.tranthien.watchstore.domain.User;
 import com.tranthien.watchstore.repository.RoleRepository;
@@ -9,6 +10,7 @@ import com.tranthien.watchstore.repository.UserRepository;
 
 @Service
 public class UserService {
+
     private UserRepository userRepository;
     private RoleRepository roleRepository;
 
@@ -25,4 +27,19 @@ public class UserService {
         return this.roleRepository.findByName(roleName);
     }
 
+    public List<User> fetchUser(){
+        return this.userRepository.findAll();
+    }
+
+    public User getUserById(long id){
+        return this.userRepository.findById(id).get();
+    }
+
+    public void handleDeleteUserById(long id){
+        this.userRepository.deleteById(id);
+    }
+
+    public boolean checkEmailExist(String email){
+        return this.userRepository.existsByEmail(email);
+    }
 }

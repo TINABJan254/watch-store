@@ -2,10 +2,10 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 
 <aside id="sidebar">
-    <div class="d-flex">
-        <button class="toggle-btn" type="button">
-            <i class="lni lni-grid-alt"></i>
-        </button>
+    <div class="">
+        <div class="sidebar-title">
+            <i class="">TWatch store</i>
+        </div>
     </div>
     <ul class="sidebar-nav">
         <li class="sidebar-item">

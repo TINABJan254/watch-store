@@ -32,7 +32,49 @@ body {
     transition: all 0.35s ease-in-out;
     background-color: #fff;
     min-width: 0;
+
+    padding-top: 60px;
+    margin-left: 260px; /* Đẩy nội dung chính sang phải */
+    padding: 20px;
+    padding-top: 80px; /* Để tránh bị header che */
 }
+
+/*Header*/
+.header {
+    padding-top: 10px;
+    padding-bottom: 10px;
+    background-color: #dddfe2;
+
+
+    position: fixed;
+    top: 0;
+    right: 0;
+    width: calc(100% - 260px); /* Nếu sidebar rộng 250px */
+    z-index: 1000;
+    background-color: #dddfe2;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+.header .inner-wrap {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+}
+
+.header .inner-wrap .inner-content {
+    padding-right: 5px;
+    margin: 10px;
+}
+
+.header .inner-wrap .inner-content span {
+    font-size: 18px;
+}
+
+.header .inner-wrap .inner-avatar {
+    margin: 10px;
+}
+
+/* End header */
 
 #sidebar {
     width: 260px;
@@ -42,16 +84,29 @@ body {
     background-color: #0e2238;
     display: flex;
     flex-direction: column;
+
+    position: fixed; /* Cố định vị trí */
+    top: 0;
+    left: 0;
+    width: 260px; /* Điều chỉnh độ rộng phù hợp */
+    height: 100vh; /* Chiều cao full màn hình */
+    background-color: #0e2238;
+    color: white; /* Màu chữ */
+    padding: 20px;
+    overflow-y: auto; /* Cho phép cuộn nếu nội dung quá dài */
+    z-index: 1000; /* Đảm bảo không bị che */
 }
 
-.toggle-btn {
+.sidebar-title {
     background-color: transparent;
     cursor: pointer;
     border: 0;
-    padding: 1rem 1.5rem;
+    padding-left: 1.5rem;
+    padding-right: 1.5rem;
+    padding-top: 30px;
 }
 
-.toggle-btn i {
+.sidebar-title i {
     font-size: 1.5rem;
     color: #FFF;
 }
@@ -59,6 +114,11 @@ body {
 .sidebar-nav {
     padding: 2rem 0;
     flex: 1 1 auto;
+}
+
+.sidebar .sidebar-title {
+    margin: 10px;
+    color: white;
 }
 
 a.sidebar-link {
@@ -117,5 +177,113 @@ a.sidebar-link:hover {
     width: 40px;
 }
 
+
+/* Content */
+
+.content .inner-head {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding-bottom: 20px;
+}
+
+.content .inner-pagination {
+    /* display: inline-block; */
+    display: flex;
+    justify-content: flex-end;
+}
+
+.content .inner-pagination a {
+    color: black;
+    float: left;
+    padding: 8px 16px;
+    text-decoration: none;
+}
+
+.content .inner-pagination a.active {
+    background-color: #4CAF50;
+    color: white;
+    border-radius: 5px;
+}
+
+.content .inner-pagination a:hover:not(.active) {
+    background-color: #ddd;
+    border-radius: 5px;
+}
+
+
+/* User update */
+.content .title {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 30px;
+}
+
+.content .title h3{
+    font-weight: 700;
+}
+
+.content .inner-wrap {
+    display: flex;
+    justify-content: center;
+}
+.content .inner-wrap .inner-image{
+    width: 20%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    margin-right: 50px;
+
+    border-style: solid;
+    border-color: #179641;
+}
+
+.content .inner-wrap .inner-image img{
+    width: 100%;
+}
+
+.content .inner-wrap .inner-infor{
+    width: calc(40% - 3px);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+/*User update*/
+
+/*Product*/
+
+/* End product */
+.content .product-content{
+    display: flex;
+    /* justify-content: center; */
+}
+
+.content .product-content .inner-product-image{
+    width: 27%;
+    margin-right: 40px;
+}
+
+.content .product-content .inner-product-image img{
+    width: 100%;
+    border: solid 1px;
+}
+
+.content .product-content .inner-product-info{
+    width: calc(67% - 40px);
+}
+
+/* End content  */
+
+/* form */
+
+.content .inner-form h3{
+    font-weight: 700;
+}
+.content .inner-form .form-btn{
+    display: flex;
+    justify-content: center;
+}
+/* End form */
 
 @media (min-width: 768px) {}

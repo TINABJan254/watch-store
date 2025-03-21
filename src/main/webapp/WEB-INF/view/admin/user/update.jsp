@@ -16,14 +16,26 @@
     <link rel="stylesheet" href="/admin/css/style.css">
 
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
-    <!-- Jquery preview image -->
+
+     <!-- Jquery preview image -->
     <script>
         $(document).ready(() => {
             const avatarFile = $("#avatarFile");
+            const avatarPreview = $("#avatarPreview");
+
+            const avatarFileName = "${newUser.avatar}"; 
+            const avatarFolderPath = "/images/avatar/"; 
+
+            if (avatarFileName) {
+                const fullAvatarURL = avatarFolderPath + avatarFileName;
+                avatarPreview.attr("src", fullAvatarURL);
+                avatarPreview.css({ "display": "block" });
+            }
+
             avatarFile.change(function (e) {
                 const imgURL = URL.createObjectURL(e.target.files[0]);
-                $("#avatarPreview").attr("src", imgURL);
-                $("#avatarPreview").css({ "display": "block" });
+                avatarPreview.attr("src", imgURL);
+                avatarPreview.css({ "display": "block" });
             });
         });
     </script>
@@ -41,17 +53,27 @@
                             <ol class="breadcrumb mb-4">
                                 <li class="breadcrumb-item"> <a href="/admin">Dashboard</a></li>
                                 <li class="breadcrumb-item"> <a href="/admin/user">User</a></li>
-                                <li class="breadcrumb-item active">Create user</li>
+                                <li class="breadcrumb-item active">Update</li>
                             </ol>
                         </div>
                         <hr>
                         <div class="inner-form">
                             <div class="row">
                                 <div class="col-12 col-md-6 mx-auto">
-                                    <div class="col-12 col-md-6 mx-auto mb-3">
-                                        <h3>Create an user</h3>
+                                    <div class="col-12 mx-auto mb-3 d-flex justify-content-center">
+                                        <h3>Update the user with id = ${newUser.id}</h3>
                                     </div>
-                                    <form:form method="POST" enctype="multipart/form-data" action="/admin/user/create" modelAttribute="newUser" class="row">
+
+                                    <div class="col-12 mb-3 d-flex justify-content-center">
+                                        <img style="max-height: 250px; display: none;" alt="avatar preview"
+                                            id="avatarPreview" />
+                                    </div>
+
+                                    <form:form method="POST" enctype="multipart/form-data" action="/admin/user/update" modelAttribute="newUser" class="row">
+                                        <div class="mb-3" style="display : none">
+                                            <label class="form-label">ID:</label>
+                                            <form:input type="text" class="form-control" path = "id"/>
+                                        </div>
                                         <div class="mb-3 col-12 col-md-12">
                                             <label class="form-label">Full name:</label>
                                             <c:set var="errorFullName">
@@ -70,15 +92,6 @@
                                     
                                             <form:input type="email" class="form-control ${not empty errorEmail? 'is-invalid':''}" path="email" />
                                             <form:errors path="email" cssClass="invalid-feedback" />
-                                        </div>
-                                        <div class="mb-3 col-12 col-md-6">
-                                            <label class="form-label">Password:</label>
-                                            <c:set var="errorPassword">
-                                                <form:errors path="password" />
-                                            </c:set>
-                                    
-                                            <form:input type="password" class="form-control ${not empty errorPassword? 'is-invalid':''}" path="password" />
-                                            <form:errors path="password" cssClass="invalid-feedback" />
                                         </div>
                                         <div class="mb-3 col-12 col-md-6">
                                             <label class="form-label">Phone number:</label>
@@ -100,12 +113,8 @@
                                             <label for="avatarFile" class="form-label">Avatar:</label>
                                             <input class="form-control" type="file" id="avatarFile" accept=".png, .jpg, .jpeg" name="avatarImg">
                                         </div>
-                                        <div class="col-12 mb-3">
-                                            <img style="max-height: 250px; display: none;" alt="avatar preview"
-                                                id="avatarPreview" />
-                                        </div>
                                         <div class="form-btn col-12 mb-5">
-                                            <button type="submit" class="btn btn-primary">Create</button>
+                                            <button type="submit" class="btn btn-warning">Update</button>
                                         </div>
                                     </form:form>
                                 </div>
