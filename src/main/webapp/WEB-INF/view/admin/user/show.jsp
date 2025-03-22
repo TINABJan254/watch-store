@@ -65,7 +65,7 @@
                                                     <td>${user.email}</td>
                                                     <td>
                                                         <a href="/admin/user/${user.id}" class="btn btn-success">View</a>
-                                                        <a href="/admin/user/update${user.id}" class="btn btn-warning mx-2">Update</a>
+                                                        <a href="/admin/user/update/${user.id}" class="btn btn-warning mx-2">Update</a>
                                                 
                                                         <!-- Button trigger modal -->
                                                         <button type="button" class="btn btn-danger" onclick="setDeleteId('${user.id}')" data-bs-toggle="modal" data-bs-target="#deleteWarningModal">
