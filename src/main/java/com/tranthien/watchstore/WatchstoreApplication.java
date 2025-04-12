@@ -3,9 +3,9 @@ package com.tranthien.watchstore;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
-@SpringBootApplication(exclude = org.springframework.boot.autoconfigure.security.servlet.SecurityAutoConfiguration.class)
+// @SpringBootApplication(exclude = org.springframework.boot.autoconfigure.security.servlet.SecurityAutoConfiguration.class)
 
-// @SpringBootApplication
+@SpringBootApplication
 public class WatchstoreApplication {
 
 	public static void main(String[] args) {

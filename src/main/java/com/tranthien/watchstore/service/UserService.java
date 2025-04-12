@@ -5,6 +5,7 @@ import java.util.List;
 import org.springframework.stereotype.Service;
 import com.tranthien.watchstore.domain.Role;
 import com.tranthien.watchstore.domain.User;
+import com.tranthien.watchstore.domain.dto.RegisterDTO;
 import com.tranthien.watchstore.repository.RoleRepository;
 import com.tranthien.watchstore.repository.UserRepository;
 
@@ -42,4 +43,17 @@ public class UserService {
     public boolean checkEmailExist(String email){
         return this.userRepository.existsByEmail(email);
     }
+
+    public User getUserByEmail(String email){
+        return this.userRepository.findByEmail(email);
+    }
+
+    public User registerDTOtoUser(RegisterDTO registerDTO){
+        User user = new User();
+        user.setFullName(registerDTO.getFirstName() + " " + registerDTO.getLastName());
+        user.setEmail(registerDTO.getEmail());
+        user.setPassword(registerDTO.getPassword());
+        return user;
+    }
+
 }

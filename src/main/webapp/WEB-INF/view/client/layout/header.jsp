@@ -45,23 +45,34 @@
                 </div>
                 <div class="col-lg-6 col-md-5">
                     <div class="header__top__right">
-                        <div class="header__top__links">
-                            <a href="/login">Đăng nhập</a>
-                        </div>
-                        <div class="header__top__hover">
-                            <!-- <span>Admin </span> -->
-                            <ul>
-                                <li style="white-space: nowrap; text-align: center;">
-                                    <a style="color: #000000; font-size: 15px;" href="#">Tài khoản</a>
-                                </li>
-                                <li style="white-space: nowrap; text-align: center;">
-                                    <a style="color: #000000; font-size: 15px;" href="/order-history">Lịch sử mua hàng</a>
-                                </li>
-                                <li style="white-space: nowrap; text-align: center;">
-                                    <a style="color: #000000; font-size: 15px;" href="#">Đăng xuất</a>
-                                </li>
-                            </ul>
-                        </div>
+                        <c:if test="${empty pageContext.request.userPrincipal}">
+                            <div class="header__top__links">
+                                <a href="/login">Đăng nhập</a>
+                            </div>
+                        </c:if>
+                        
+                        <c:if test="${not empty pageContext.request.userPrincipal}">
+                            <div class="header__top__hover">
+                                <span>Admin </span>
+                                <ul>
+                                    <li style="white-space: nowrap; text-align: center;">
+                                        <a style="color: #000000; font-size: 15px;" href="#">Tài khoản</a>
+                                    </li>
+                                    <li style="white-space: nowrap; text-align: center;">
+                                        <a style="color: #000000; font-size: 15px;" href="/order-history">Lịch sử mua hàng</a>
+                                    </li>
+                                    <li style="white-space: nowrap; text-align: center;">
+                                        <form method = "post" action="/logout">
+                                            <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
+                                            <button type="submit" style="color: #000000; font-size: 15px;">
+                                                Đăng xuất
+                                            </button>
+                                        </form>
+                                        <!-- <a style="color: #000000; font-size: 15px;" href="#">Đăng xuất</a> -->
+                                    </li>
+                                </ul>
+                            </div>
+                        </c:if>
                     </div>
                 </div>
             </div>
@@ -94,7 +105,9 @@
             <div class="col-lg-3 col-md-3">
                 <div class="header__nav__option">
                     <!-- <a href="#" class="search-switch"><img src="/client/icon/search.png" alt=""></a> -->
-                    <a href="/cart"><img src="/client/icon/cart.png" alt=""> <span>2</span></a>
+                    <c:if test="${not empty pageContext.request.userPrincipal}">
+                        <a href="/cart"><img src="/client/icon/cart.png" alt=""> <span>2</span></a>
+                    </c:if>
                 </div>
             </div>
         </div>
