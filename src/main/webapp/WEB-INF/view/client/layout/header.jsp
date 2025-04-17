@@ -62,13 +62,14 @@
                                         <a style="color: #000000; font-size: 15px;" href="/order-history">Lịch sử mua hàng</a>
                                     </li>
                                     <li style="white-space: nowrap; text-align: center;">
-                                        <form method = "post" action="/logout">
-                                            <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
-                                            <button type="submit" style="color: #000000; font-size: 15px;">
-                                                Đăng xuất
-                                            </button>
-                                        </form>
-                                        <!-- <a style="color: #000000; font-size: 15px;" href="#">Đăng xuất</a> -->
+                                        <a style="color: #000000; font-size: 15px;" href="#"> 
+                                            <form method="post" action="/logout">
+                                                <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
+                                                <button type="submit">
+                                                    Đăng xuất
+                                                </button>
+                                            </form>
+                                        </a>
                                     </li>
                                 </ul>
                             </div>
