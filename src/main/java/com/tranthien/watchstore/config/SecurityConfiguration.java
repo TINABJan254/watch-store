@@ -5,11 +5,13 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
 import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
+import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
+import org.springframework.session.security.web.authentication.SpringSessionRememberMeServices;
 
 import com.tranthien.watchstore.service.CustomUserDetailsService;
 import com.tranthien.watchstore.service.UserService;
@@ -35,6 +37,14 @@ public class SecurityConfiguration {
         return new CustomSuccessHandler();
     }
 
+     @Bean
+    public SpringSessionRememberMeServices rememberMeServices() {
+        SpringSessionRememberMeServices rememberMeServices = new SpringSessionRememberMeServices();
+        // optionally customize
+        rememberMeServices.setAlwaysRemember(true);
+        return rememberMeServices;
+    }
+
     @Bean
     public DaoAuthenticationProvider authProvider(PasswordEncoder passwordEncoder, UserDetailsService userDetailsService) {
         DaoAuthenticationProvider authProvider = new DaoAuthenticationProvider();
@@ -57,6 +67,14 @@ public class SecurityConfiguration {
                 .requestMatchers("/admin/**").hasRole("ADMIN")
 
                 .anyRequest().authenticated())
+            
+            .sessionManagement((sessionManagement) -> sessionManagement
+                .sessionCreationPolicy(SessionCreationPolicy.ALWAYS)
+                .invalidSessionUrl("/logout?expired")
+                .maximumSessions(1)
+                .maxSessionsPreventsLogin(false))
+
+            .logout(logout -> logout.deleteCookies("JSESSIONID").invalidateHttpSession(true))
 
             .formLogin(formLogin -> formLogin
                 .loginPage("/login")
@@ -64,6 +82,8 @@ public class SecurityConfiguration {
                 .successHandler(customSuccessHandler())
                 .permitAll())
         
+            .rememberMe(rememberMe -> rememberMe.rememberMeServices(rememberMeServices()))
+
             .exceptionHandling(ex -> ex.accessDeniedPage("/access-denied"));
         return http.build();
     }
