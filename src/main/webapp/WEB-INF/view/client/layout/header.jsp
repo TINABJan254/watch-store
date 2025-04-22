@@ -15,7 +15,9 @@
             <a href="#">Đăng nhập</a>
         </div>
         <div class="offcanvas__top__hover">
-            <span>ADMIN <i class="arrow_carrot-down"></i></span>
+            <span>
+                <c:out value = "${sessionScope.fullName}"/> 
+                <i class="arrow_carrot-down"></i></span>
             <ul>
                 <li>Tài khoản</li>
                 <li>Lịch sử mua hàng</li>
@@ -53,7 +55,7 @@
                         
                         <c:if test="${not empty pageContext.request.userPrincipal}">
                             <div class="header__top__hover">
-                                <span>Admin </span>
+                                <span> <c:out value = "${sessionScope.fullName}"/></span>
                                 <ul>
                                     <li style="white-space: nowrap; text-align: center;">
                                         <a style="color: #000000; font-size: 15px;" href="#">Tài khoản</a>
@@ -93,13 +95,6 @@
                     <ul>
                         <li><a href="/">Trang chủ</a></li>
                         <li><a href="/shop">Sản phẩm</a></li>
-                        <li><a href="#">Pages</a>
-                            <ul class="dropdown">
-                                <li><a href="./shop-details.html">Shop Details</a></li>
-                                <li><a href="./shopping-cart.html">Shopping Cart</a></li>
-                                <li><a href="./checkout.html">Check Out</a></li>
-                            </ul>
-                        </li>
                     </ul>
                 </nav>
             </div>
@@ -107,7 +102,7 @@
                 <div class="header__nav__option">
                     <!-- <a href="#" class="search-switch"><img src="/client/icon/search.png" alt=""></a> -->
                     <c:if test="${not empty pageContext.request.userPrincipal}">
-                        <a href="/cart"><img src="/client/icon/cart.png" alt=""> <span>2</span></a>
+                        <a href="/cart"><img src="/client/icon/cart.png" alt=""> <span>${sessionScope.sum}</span></a>
                     </c:if>
                 </div>
             </div>

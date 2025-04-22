@@ -12,23 +12,23 @@ public class ProductService {
 
     private final ProductRepository productRepository;
 
-    public ProductService(ProductRepository productRepository){
+    public ProductService(ProductRepository productRepository) {
         this.productRepository = productRepository;
     }
-    
-    public List<Product> fetchProduct(){
+
+    public List<Product> fetchProduct() {
         return this.productRepository.findAll();
     }
-    
-    public Product handleSaveProduct(Product product){
+
+    public Product handleSaveProduct(Product product) {
         return this.productRepository.save(product);
     }
 
-    public Product getProductById(long id){
+    public Product getProductById(long id) {
         return this.productRepository.findById(id).get();
     }
 
-    public void handleDeleteProductById(long id){
+    public void handleDeleteProductById(long id) {
         this.productRepository.deleteById(id);
     }
 

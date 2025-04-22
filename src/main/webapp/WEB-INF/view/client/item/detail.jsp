@@ -39,8 +39,8 @@
                 <div class="row">
                     <div class="col-lg-12">
                         <div class="product__details__breadcrumb">
-                            <a href="./index.html">Trang chủ</a>
-                            <a href="./shop.html">Sản phẩm</a>
+                            <a href="/">Trang chủ</a>
+                            <a href="/shop">Sản phẩm</a>
                             <span>Chi tiết sản phẩm</span>
                         </div>
                     </div>
@@ -52,29 +52,35 @@
                 <div class="row">
                     <div class="product__details__image">
                         <div class="border rounded">
-                            <img src="/images/product/casio.jpg" class="img-fluid rounded" alt="Image">
+                            <img src="/images/product/${product.image}" class="img-fluid rounded" alt="Image">
                         </div>
                     </div>
                     <div class="product__details__text">
-                            <h3>Casio MX1k24 2mm</h3>
-                            <h3>$149.99</h3>
-                            <ul class="">
-                                <li>
-                                    <span>Loại</span> : Cơ
-                                </li>
-                                <li>
-                                    <span>Kho</span> : 123
-                                </li>
-                            </ul>
-                            <p>Casio là 1 hãng chất lượng</p>
-                            <div class="product__details__cart__option">
-                                <div class="quantity">
-                                    <div class="pro-qty"><span class="fa fa-angle-up dec qtybtn"></span>
-                                        <input type="text" value="1">
-                                    <span class="fa fa-angle-down inc qtybtn"></span></div>
+                        <h3>${product.name}</h3>
+                        <h3>${product.price}</h3>
+                        <ul class="">
+                            <li>
+                                <span>Loại</span> : ${product.type}
+                            </li>
+                            <li>
+                                <span>Kho</span> : ${product.quantity}
+                            </li>
+                        </ul>
+                        <p>${product.shortDesc}</p>
+                        <div class="product__details__cart__option">
+                            <div class="quantity">
+                                <div class="pro-qty"><span class="fa fa-angle-up dec qtybtn"></span>
+                                    <input type="text" value="1">
+                                    <span class="fa fa-angle-down inc qtybtn"></span>
                                 </div>
-                                <a href="#" class="primary-btn">add to cart</a>
                             </div>
+                            <button form="add-to-cart-form" type="submit" class="primary-btn">
+                                add to cart
+                            </button>
+                            <form id="add-to-cart-form" action="/add-product-to-cart/${product.id}" method="post">
+                                <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
+                            </form>
+                        </div>
                     </div>
                 </div>
             </div>

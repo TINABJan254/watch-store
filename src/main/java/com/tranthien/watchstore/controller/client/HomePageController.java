@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 
 import com.tranthien.watchstore.domain.User;
 import com.tranthien.watchstore.domain.dto.RegisterDTO;
+import com.tranthien.watchstore.service.ProductService;
 import com.tranthien.watchstore.service.UserService;
 
 import jakarta.validation.Valid;
@@ -19,10 +20,12 @@ public class HomePageController {
 
     private final UserService userService;
     private final PasswordEncoder passwordEncoder;
+    private final ProductService productService;
 
-    public HomePageController(UserService userService, PasswordEncoder passwordEncoder){
+    public HomePageController(UserService userService, PasswordEncoder passwordEncoder, ProductService productService){
         this.userService = userService;
         this.passwordEncoder = passwordEncoder;
+        this.productService = productService;
     }
 
     @GetMapping("/")
@@ -31,7 +34,8 @@ public class HomePageController {
     }
 
     @GetMapping("/shop")
-    public String getShoppingPage(){
+    public String getShoppingPage(Model model){
+        model.addAttribute("products", this.productService.fetchProduct());
         return "client/homepage/shop";
     }
 

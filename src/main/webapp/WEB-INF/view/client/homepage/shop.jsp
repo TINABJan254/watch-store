@@ -177,74 +177,30 @@
                             </div>
                         </div>
                     </div>
+
                     <div class="row">
-                        <div class="col-lg-4 col-md-6 col-sm-6">
-                            <div class="product__item">
-                                <div class="product__item__pic set-bg" data-setbg="/images/product/casio.jpg">
-                                </div>
-                                <div class="product__item__text">
-                                    <h6>Đồng hồ</h6>
-                                    <a href="#" class="add-cart">+ Add To Cart</a>
-                                    <h5>$67.24</h5>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-lg-4 col-md-6 col-sm-6">
-                            <div class="product__item sale">
-                                <div class="product__item__pic set-bg" data-setbg="/images/product/casio.jpg">
-                                    <span class="label">Sale</span>
-                                </div>
-                                <div class="product__item__text">
-                                    <h6>Đồng hồ</h6>
-                                    <a href="#" class="add-cart">+ Add To Cart</a>
-                                    <h5>$43.48</h5>
+                        <c:forEach var="product" items="${products}">
+                            <div class="col-lg-4 col-md-6 col-sm-6">
+                                <div class="product__item">
+                                    <a href="/product/${product.id}">
+                                        <div class="product__item__pic set-bg" data-setbg="/images/product/${product.image}">
+                                            <span class="label">New</span>
+                                        </div>
+                                    </a>
+                                    <div class="product__item__text">
+                                        <h6>${product.name}</h6>
+                                        <!-- <a href="#" class="add-cart">+ Add To Cart</a> -->
+                                        <form action="/add-product-to-cart/${product.id}" method="post">
+                                            <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
+                                            <button>+ Add To Cart</button>
+                                        </form>
+                                        <h5>${product.price}</h5>
+                                    </div>
                                 </div>
                             </div>
-                        </div>
-                        <div class="col-lg-4 col-md-6 col-sm-6">
-                            <div class="product__item">
-                                <div class="product__item__pic set-bg" data-setbg="/images/product/casio.jpg"></div>
-                                <div class="product__item__text">
-                                    <h6>Đồng hồ</h6>
-                                    <a href="#" class="add-cart">+ Add To Cart</a>
-                                    <h5>$60.9</h5>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-lg-4 col-md-6 col-sm-6">
-                            <div class="product__item sale">
-                                <div class="product__item__pic set-bg" data-setbg="/images/product/casio.jpg">
-                                    <span class="label">Sale</span>
-                                </div>
-                                <div class="product__item__text">
-                                    <h6>Đồng hồ</h6>
-                                    <a href="#" class="add-cart">+ Add To Cart</a>
-                                    <h5>$98.49</h5>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-lg-4 col-md-6 col-sm-6">
-                            <div class="product__item">
-                                <div class="product__item__pic set-bg" data-setbg="/images/product/casio.jpg">
-                                </div>
-                                <div class="product__item__text">
-                                    <h6>Đồng hồ</h6>
-                                    <a href="#" class="add-cart">+ Add To Cart</a>
-                                    <h5>$49.66</h5>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-lg-4 col-md-6 col-sm-6">
-                            <div class="product__item">
-                                <div class="product__item__pic set-bg" data-setbg="/images/product/casio.jpg"></div>
-                                <div class="product__item__text">
-                                    <h6>Đồng hồ</h6>
-                                    <a href="#" class="add-cart">+ Add To Cart</a>
-                                    <h5>$26.28</h5>
-                                </div>
-                            </div>
-                        </div>
+                        </c:forEach>
                     </div>
+
                     <div class="row">
                         <div class="col-lg-12">
                             <div class="product__pagination">
