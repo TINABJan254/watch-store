@@ -145,6 +145,12 @@ a.sidebar-link:hover {
     position: relative;
 }
 
+.sidebar-footer button{
+    background: transparent;
+    border: none;
+    display: block;
+}
+
 #sidebar.expand .sidebar-link[data-bs-toggle="collapse"]::after {
     border: solid;
     border-width: 0 .075rem .075rem 0;
