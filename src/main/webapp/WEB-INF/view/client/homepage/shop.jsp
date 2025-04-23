@@ -1,6 +1,7 @@
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <!DOCTYPE html>
 <html>
 
@@ -194,7 +195,9 @@
                                             <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
                                             <button>+ Add To Cart</button>
                                         </form>
-                                        <h5>${product.price}</h5>
+                                        <h5>
+                                            <fmt:formatNumber type="number" value="${product.price}"/> đ
+                                        </h5>
                                     </div>
                                 </div>
                             </div>
