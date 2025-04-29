@@ -1538,6 +1538,19 @@ ol {
 	text-align: center;
 }
 
+.shopping__cart__table table tbody tr td.cart__close button {
+	border-color: #fff;
+	background-color: white;
+	border: none;
+	box-shadow: none;
+	outline: none;
+	padding: 0;
+	margin: 0;
+	font: inherit;
+	color: inherit;
+	cursor: pointer;
+} 
+
 .continue__btn.update__btn {
 	text-align: right;
 }

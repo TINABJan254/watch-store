@@ -1,6 +1,7 @@
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <!DOCTYPE html>
 <html>
 
@@ -61,50 +62,48 @@
                                     <th>Sản phẩm</th>
                                     <th>Số lượng</th>
                                     <th>Tổng</th>
-                                    <th></th>
+                                    <th>xóa</th>
                                 </tr>
                             </thead>
                             <tbody>
-                                <tr>
-                                    <td class="product__cart__item">
-                                        <div class="product__cart__item__pic">
-                                            <img src="/images/product/casio.jpg" alt="">
-                                        </div>
-                                        <div class="product__cart__item__text">
-                                            <h6>Đồng hồ</h6>
-                                            <h5>$98.49</h5>
-                                        </div>
-                                    </td>
-                                    <td class="quantity__item">
-                                        <div class="quantity">
-                                            <div class="pro-qty-2">
-                                                <input type="text" value="1">
+                                <c:forEach var="cartDetail" items="${cartDetails}">
+                                    <tr>
+                                        <td class="product__cart__item">
+                                            <div class="product__cart__item__pic">
+                                                <a href="/product/${cartDetail.product.id}" target="_blank">
+                                                    <img src="/images/product/${cartDetail.product.image}" alt="">
+                                                </a>
                                             </div>
-                                        </div>
-                                    </td>
-                                    <td class="cart__price">$ 30.00</td>
-                                    <td class="cart__close"><i class="fa fa-close"></i></td>
-                                </tr>
-                                <tr>
-                                    <td class="product__cart__item">
-                                        <div class="product__cart__item__pic">
-                                            <img src="/images/product/casio.jpg" alt="">
-                                        </div>
-                                        <div class="product__cart__item__text">
-                                            <h6>Diagonal Textured Cap</h6>
-                                            <h5>$98.49</h5>
-                                        </div>
-                                    </td>
-                                    <td class="quantity__item">
-                                        <div class="quantity">
-                                            <div class="pro-qty-2">
-                                                <input type="text" value="1">
+                                            <div class="product__cart__item__text">
+                                                <h6>${cartDetail.product.name}</h6>
+                                                <h5> 
+                                                    <fmt:formatNumber type="number" value="${cartDetail.price}"/> đ
+                                                </h5>
                                             </div>
-                                        </div>
-                                    </td>
-                                    <td class="cart__price">$ 32.50</td>
-                                    <td class="cart__close"><i class="fa fa-close"></i></td>
-                                </tr>
+                                        </td>
+                                        <td class="quantity__item">
+                                            <div class="quantity">
+                                                <div class="pro-qty-2">
+                                                    <input type="text" value="${cartDetail.quantity}" 
+                                                        data-cart-detail-id="${cartDetail.id}"
+                                                        data-cart-detail-price="${cartDetail.price}"
+                                                        data-cart-detail-index="${status.index}">
+                                                </div>
+                                            </div>
+                                        </td>
+                                        <td class="cart__price" data-cart-detail-id="${cartDetail.id}">
+                                            <fmt:formatNumber type="number" value="${cartDetail.price * cartDetail.quantity}"/> đ
+                                        </td>
+                                        <td class="cart__close">
+                                            <form method="post" action="/delete-cart-product/${cartDetail.id}">
+                                                <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
+                                                <button>
+                                                    <i class="fa fa-close"></i>
+                                                </button>
+                                            </form>
+                                        </td>
+                                    </tr>
+                                </c:forEach>
                             </tbody>
                         </table>
                     </div>
@@ -116,17 +115,24 @@
                         </div>
                     </div>
                 </div>
-                <div class="col-lg-4">
-                    <div class="cart__total">
-                        <h6>Tổng giỏ hàng</h6>
-                        <ul>
-                            <li>Tạm tính <span>$ 169.50</span></li>
-                            <li>Phí vận chuyển <span>$ 0</span></li>
-                            <li>Tổng cộng <span>$ 169.50</span></li>
-                        </ul>
-                        <a href="/checkout" class="primary-btn">Tiến hành thanh toán</a>
+                <c:if test="${not empty cartDetails}">
+                    <div class="col-lg-4">
+                        <div class="cart__total">
+                            <h6>Tổng giỏ hàng</h6>
+                            <ul>
+                                <li>
+                                    Tạm tính <span data-cart-total-price="${totalPrice}"> <fmt:formatNumber type="number" value="${totalPrice}" /> đ </span>
+                                </li>
+                                <li>Phí vận chuyển <span>0 đ</span></li>
+                                <li>
+                                    Tổng cộng <span data-cart-total-price="${totalPrice}"><fmt:formatNumber type="number" value="${totalPrice}" /> đ</span>
+                                </li>
+                            </ul>
+                            <a href="/checkout" class="primary-btn">Tiến hành thanh toán</a>
+                        </div>
                     </div>
-                </div>
+                </c:if>
+                
             </div>
         </div>
     </section>

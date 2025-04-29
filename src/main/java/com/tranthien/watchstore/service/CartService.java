@@ -1,5 +1,7 @@
 package com.tranthien.watchstore.service;
 
+import java.util.Optional;
+
 import org.springframework.stereotype.Service;
 
 import com.tranthien.watchstore.domain.Cart;
@@ -26,6 +28,10 @@ public class CartService {
         this.userService = userService;
         this.productService = productService;
         this.cartDetailRepository = cartDetailRepository;
+    }
+
+    public Cart fetchCartByUser(User user){
+        return this.cartRepository.findByUser(user);
     }
 
     public void handleAddProductToCart(String email, long productId, HttpSession session) {
@@ -66,4 +72,26 @@ public class CartService {
             }
         }
     }
+    
+    public void handleRemoveCartDetail(long cartDetailId, HttpSession session) {
+        Optional<CartDetail> cartDetailOptional = this.cartDetailRepository.findById(cartDetailId);
+        if (cartDetailOptional.isPresent()){
+            CartDetail cartDetail = cartDetailOptional.get();
+            Cart cart = cartDetail.getCart();
+
+            this.cartDetailRepository.deleteById(cartDetailId);
+
+            if (cart.getSum() > 1) {
+                long s = cart.getSum() - 1;
+                cart.setSum(s);
+                session.setAttribute("sum", s);
+                this.cartRepository.save(cart);
+            } else if (cart.getSum() == 1){
+                this.cartRepository.delete(cart);
+                session.setAttribute("sum", 0);
+            }
+
+        }
+    }
+
 }
