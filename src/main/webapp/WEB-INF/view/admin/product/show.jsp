@@ -90,6 +90,7 @@
                                                                 <div class="modal-footer">
                                                                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">No</button>
                                                                     <form action="/admin/product/delete" method = "POST">
+                                                                        <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
                                                                         <input type="hidden" name="id" id="deleteProductId"/>
                                                                         <button type="submit button" class="btn btn-success">Yes</button>
                                                                     </form>
