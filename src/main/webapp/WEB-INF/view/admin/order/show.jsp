@@ -50,7 +50,7 @@
                                             <tr>
                                                 <th>ID</th>
                                                 <th>Total price</th>
-                                                <th>User</th>
+                                                <th>Receiver</th>
                                                 <th>Status</th>
                                                 <th>Action</th>
                                             </tr>
@@ -58,12 +58,12 @@
                                         <tbody>
                                             <c:forEach var="order" items="${orders}">
                                                 <tr>
-                                                    <th>1</th>
+                                                    <th>${order.id}</th>
                                                     <td>
-                                                        <fmt:formatNumber type="number" value="${order.totalPrice}" /> 30000đ
+                                                        <fmt:formatNumber type="number" value="${order.totalPrice}" /> đ
                                                     </td>
-                                                    <td>Tran Dinh Thien</td>
-                                                    <td>Complete</td>
+                                                    <td>${order.receiverName}</td>
+                                                    <td>${order.status}</td>
                                                     <td>
                                                         <a href="/admin/order/${order.id}" class="btn btn-success">View</a>
                                                         <a href="/admin/order/update/${order.id}" class="btn btn-warning mx-2">Update</a>
@@ -87,7 +87,7 @@
                                                                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">No</button>
                                                                     <form action="/admin/order/delete" method = "POST">
                                                                         <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
-                                                                        <input type="hidden" name="id" id="deleteOrdertId"/>
+                                                                        <input type="hidden" name="id" id="deleteOrderId"/>
                                                                         <button type="submit button" class="btn btn-success">Yes</button>
                                                                     </form>
                                                                 </div>

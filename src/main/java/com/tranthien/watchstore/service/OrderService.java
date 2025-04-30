@@ -6,15 +6,19 @@ import java.util.Optional;
 import org.springframework.stereotype.Service;
 
 import com.tranthien.watchstore.domain.Order;
+import com.tranthien.watchstore.domain.OrderDetail;
+import com.tranthien.watchstore.repository.OrderDetailRepository;
 import com.tranthien.watchstore.repository.OrderRepository;
 
 @Service
 public class OrderService {
     
     private final OrderRepository orderRepository;
+    private final OrderDetailRepository orderDetailRepository;
 
-    public OrderService(OrderRepository orderRepository){
+    public OrderService(OrderRepository orderRepository, OrderDetailRepository orderDetailRepository){
         this.orderRepository = orderRepository;
+        this.orderDetailRepository = orderDetailRepository;
     }
 
     public List<Order> fetchOrder(){
@@ -23,6 +27,10 @@ public class OrderService {
 
     public Order handleSaveOrder(Order order){
         return this.orderRepository.save(order);
+    }
+
+    public OrderDetail handleSaveOrderDetail(OrderDetail orderDetail){
+        return this.orderDetailRepository.save(orderDetail);
     }
 
     public Optional<Order> getOrderById(long id){
@@ -39,7 +47,20 @@ public class OrderService {
     }
 
     public void handleDeleteOrderById(long id){
-        this.orderRepository.deleteById(id);
+        Optional<Order> orderOptional = this.orderRepository.findById(id);
+        if (orderOptional.isPresent()) {
+            List<OrderDetail> orderDetails = orderOptional.get().getOrderDetails();
+
+            if (orderDetails != null) {
+                for (OrderDetail orderDetail : orderDetails){
+                    this.orderDetailRepository.delete(orderDetail);
+                }
+            }
+            
+            this.orderRepository.deleteById(id);
+        }
+
+        
     }
 
 }

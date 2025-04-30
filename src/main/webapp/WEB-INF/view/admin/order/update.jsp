@@ -41,81 +41,64 @@
                         </div>
                         <hr>
                         <div class="inner-head">
-                            <h3 class="fw-bold fs-4 my-3">Order table</h3>
+                            <h3 class="fw-bold fs-4 my-3">Order with id = ${order.id}</h3>
                         </div>
-                        <div class="inner-table">
+                        <div class="inner-form">
                             <div class="row">
-                                <div class="col-12 mx-auto">                    
-                                    <table class="table table-striped">
-                                        <thead>
-                                            <tr>
-                                                <th>ID</th>
-                                                <th>Total price</th>
-                                                <th>User</th>
-                                                <th>Status</th>
-                                                <th>Action</th>
-                                            </tr>
-                                        </thead>
-                                        <tbody>
-                                            <c:forEach var="order" items="${orders}">
-                                                <tr>
-                                                    <th>1</th>
-                                                    <td>
-                                                        <fmt:formatNumber type="number" value="${order.totalPrice}" /> 30000đ
-                                                    </td>
-                                                    <td>Tran Dinh Thien</td>
-                                                    <td>Complete</td>
-                                                    <td>
-                                                        <a href="/admin/order/${order.id}" class="btn btn-success">View</a>
-                                                        <a href="/admin/order/update/${order.id}" class="btn btn-warning mx-2">Update</a>
-                                                        <!-- Button trigger modal -->   
-                                                        <button type="button" class="btn btn-danger" onclick="setDeleteId('${order.id}')" data-bs-toggle="modal" data-bs-target="#deleteWarningModal">
-                                                            Delete
-                                                        </button>
+                                <div class="col-12 col-md-6 mx-auto">
+                                    <form:form method="post" action="/admin/order/update" class="row" modelAttribute="order">
+                                        <div class="mb-3" style="display: none;">
+                                            <label class="form-label">Id:</label>
+                                            <form:input type="text" class="form-control" path="id" />
+                                        </div>
+                                    
+                                        <div class="mb-3 col-12 col-md-6">
+                                            <label class="form-label">User:</label>
+                                            <input type="text" value="${order.user.fullName}" class="form-control" disabled="true" path="user.fullName" />
+                                        </div>
 
-                                                        <!-- Modal -->
-                                                        <div class="modal fade" id="deleteWarningModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                                                            <div class="modal-dialog">
-                                                            <div class="modal-content">
-                                                                <div class="modal-header">
-                                                                    <h1 class="modal-title fs-5" id="exampleModalLabel">Warning</h1>
-                                                                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                                                                </div>
-                                                                <div class="modal-body">
-                                                                    Are you sure to delete this order?
-                                                                </div>
-                                                                <div class="modal-footer">
-                                                                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">No</button>
-                                                                    <form action="/admin/order/delete" method = "POST">
-                                                                        <input type="hidden" name="id" id="deleteOrdertId"/>
-                                                                        <button type="submit button" class="btn btn-success">Yes</button>
-                                                                    </form>
-                                                                </div>
-                                                            </div>
-                                                            </div>
-                                                        </div>
-                                                    </td>
-                                                </tr>
-                                            </c:forEach>
-                                        </tbody>
-                                    </table>
+                                        <div class="mb-3 col-12 col-md-6">
+                                            <label class="form-label">Receiver:</label>
+                                            <input type="text" value="${order.receiverName}" class="form-control" disabled="true" path="receiverName" />
+                                        </div>
+                                        
+                                        <div class="mb-3 col-12 col-md-6">
+                                            <label class="form-label">Address:</label>
+                                            <input type="text" value="${order.receiverAddress}" class="form-control" disabled="true" path="receiverAddress" />
+                                        </div>
+
+                                        <div class="mb-3 col-12 col-md-6">
+                                            <label class="form-label">Phone:</label>
+                                            <input type="text" value="${order.receiverPhone}" class="form-control" disabled="true" path="receiverAddress" />
+                                        </div>
+
+                                        <div class="mb-3 col-12 col-md-6">
+                                            <label class="form-label">Price:</label>
+                                            <span class="form-control"><fmt:formatNumber type="number" value="${order.totalPrice}" /> đ</span>
+                                        </div>
+
+                                        <div class="mb-3 col-12 col-md-6">
+                                            <label class="form-label">Status:</label>
+                                            <form:select class="form-select" path="status">
+                                                <form:option value="PENDING">PENDING</form:option>
+                                                <form:option value="SHIPPING">SHIPPING</form:option>
+                                                <form:option value="COMPLETE">COMPLETE</form:option>
+                                                <form:option value="CANCEL">CANCEL</form:option>
+                                            </form:select>
+                                        </div>
+                                        <div class="col-12 mb-5">
+                                            <button type="submit" class="btn btn-warning">Update</button>
+                                        </div>
+                                        <div>
+                                            <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
+                                        </div>
+                                    </form:form>
                                 </div>
                             </div>
-                            </div>
-                        </div>
-                        <div class="inner-pagination">
-                            <a href="#">&laquo;</a>
-                            <a href="#">1</a>
-                            <a href="#" class="active">2</a>
-                            <a href="#">3</a>
-                            <a href="#">4</a>
-                            <a href="#">&raquo;</a>
                         </div>
                     </div>
                 </div>
             </main>
-            </div>
-            </div>
         </div>
     </div>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>

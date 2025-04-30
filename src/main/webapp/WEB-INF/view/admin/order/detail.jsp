@@ -55,67 +55,34 @@
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    <c:forEach var="orderDetail" items="${orderDetails}">
+                                    <c:forEach var="orderDetail" items="${order.orderDetails}">
                                         <tr>
                                             <th scope="row">
                                                 <div class="d-flex align-items-center">
-                                                    <img src="../img/product/apple-watch.jpg" class="img-fluid me-5 rounded-circle"
+                                                    <img src="../img/product/${orderDetail.product.image}" class="img-fluid me-5 rounded-circle"
                                                         style="width: 80px; height: 80px;" alt="">
                                                 </div>
                                             </th>
                                             <td>
                                                 <p class="mb-0 mt-4">
                                                     <a href="/product/${orderDetail.product.id}" target="_blank">
-                                                        Citizen 31 mm Nữ EL3100-55W
+                                                        ${orderDetail.product.name}
                                                     </a>
                                                 </p>
                                             </td>
                                             <td>
                                                 <p class="mb-0 mt-4">
-                                                    123123 đ
+                                                    <fmt:formatNumber type="number" value="${orderDetail.price}" /> đ
                                                 </p>
                                             </td>
                                             <td>
                                                 <div class="input-group quantity mt-4" style="width: 100px;">
-                                                    <input type="text" class="form-control form-control-sm text-center border-0"
-                                                        value="1">
+                                                    ${orderDetail.quantity}
                                                 </div>
                                             </td>
                                             <td>
                                                 <p class="mb-0 mt-4">
-                                                    20000000đ
-                                                </p>
-                                            </td>
-            
-                                        </tr>
-                                        <tr>
-                                            <th scope="row">
-                                                <div class="d-flex align-items-center">
-                                                    <img src="../img/product/apple-watch.jpg" class="img-fluid me-5 rounded-circle"
-                                                        style="width: 80px; height: 80px;" alt="">
-                                                </div>
-                                            </th>
-                                            <td>
-                                                <p class="mb-0 mt-4">
-                                                    <a href="/product/${orderDetail.product.id}" target="_blank">
-                                                        Citizen 31 mm Nữ EL3100-55W
-                                                    </a>
-                                                </p>
-                                            </td>
-                                            <td>
-                                                <p class="mb-0 mt-4">
-                                                    123123 đ
-                                                </p>
-                                            </td>
-                                            <td>
-                                                <div class="input-group quantity mt-4" style="width: 100px;">
-                                                    <input type="text" class="form-control form-control-sm text-center border-0"
-                                                        value="1">
-                                                </div>
-                                            </td>
-                                            <td>
-                                                <p class="mb-0 mt-4">
-                                                    20000000đ
+                                                    <fmt:formatNumber type="number" value="${orderDetail.price * orderDetail.quantity}" /> đ
                                                 </p>
                                             </td>
             
