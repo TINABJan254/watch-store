@@ -66,7 +66,7 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                <c:forEach var="cartDetail" items="${cartDetails}">
+                                <c:forEach var="cartDetail" items="${cartDetails}" varStatus="status">
                                     <tr>
                                         <td class="product__cart__item">
                                             <div class="product__cart__item__pic">
@@ -128,7 +128,25 @@
                                     Tổng cộng <span data-cart-total-price="${totalPrice}"><fmt:formatNumber type="number" value="${totalPrice}" /> đ</span>
                                 </li>
                             </ul>
-                            <a href="/checkout" class="primary-btn">Tiến hành thanh toán</a>
+                            <form:form method="post" action="/confirm-checkout"  modelAttribute="cart">
+                                <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
+                                <!-- <a href="/checkout" class="primary-btn">Tiến hành thanh toán</a> -->
+                                <div style="display: none;">
+                                    <c:forEach var="cartDetail" items="${cart.cartDetails}" varStatus="status">
+                                        <div class="mb-3">
+                                            <div class="form-group">
+                                                <label>Id:</label>
+                                                <form:input class="form-control" type="text" value="${cartDetail.id}" path="cartDetails[${status.index}].id" />
+                                            </div>
+                                            <div class="form-group">
+                                                <label>Quantity:</label>
+                                                <form:input class="form-control" type="text" value="${cartDetail.quantity}" path="cartDetails[${status.index}].quantity" />
+                                            </div>
+                                        </div>
+                                    </c:forEach>
+                                </div>
+                                <button class="primary-btn">Tiến hành thanh toán</button>
+                            </form:form>
                         </div>
                     </div>
                 </c:if>
