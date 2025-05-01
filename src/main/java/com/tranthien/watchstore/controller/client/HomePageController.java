@@ -3,6 +3,7 @@ package com.tranthien.watchstore.controller.client;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -14,6 +15,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import com.tranthien.watchstore.domain.Order;
 import com.tranthien.watchstore.domain.Product;
@@ -48,13 +50,28 @@ public class HomePageController {
     }
 
     @GetMapping("/shop")
-    public String getShoppingPage(Model model){
+    public String getShoppingPage(Model model, @RequestParam("page") Optional<String> pageOptional){
 
-        Pageable pageable = PageRequest.of(0, 10);
+        int page = 1;
+        try {
+            if (pageOptional.isPresent()) {
+                // Convert from String to int
+                page = Integer.parseInt(pageOptional.get());
+            } else {
+                // page = 1
+            }
+        } catch (Exception e) {
+            // TODO: handle exception
+        }
+
+        Pageable pageable = PageRequest.of(page - 1, 2);
         Page<Product> productPage = this.productService.fetchProduct(pageable);
         List<Product> products = productPage.getContent();
 
         model.addAttribute("products", products);
+        model.addAttribute("currentPage", page);
+        model.addAttribute("totalPages", productPage.getTotalPages());
+        
         return "client/homepage/shop";
     }
 

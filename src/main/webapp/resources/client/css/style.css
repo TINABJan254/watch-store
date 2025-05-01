@@ -1061,6 +1061,11 @@ ol {
 	padding-right: 15px;
 }
 
+.product__pagination a.disabled {
+	pointer-events: none;
+	color: gray;
+}
+
 /*---------------------
   Shop
 -----------------------*/

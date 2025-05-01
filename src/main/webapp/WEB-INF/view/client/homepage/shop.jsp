@@ -207,11 +207,11 @@
                     <div class="row">
                         <div class="col-lg-12">
                             <div class="product__pagination">
-                                <a class="active" href="#">1</a>
-                                <a href="#">2</a>
-                                <a href="#">3</a>
-                                <span>...</span>
-                                <a href="#">21</a>
+                                <a class="${1 eq currentPage ? 'disabled' : ''}" href="/shop?page=${currentPage - 1}">&laquo;</a>
+                                <c:forEach begin="0" end="${totalPages - 1}" varStatus="loop">
+                                    <a class="${(loop.index + 1) eq currentPage ? 'active' : ''}" href="/shop?page=${loop.index + 1}">${loop.index + 1}</a>
+                                </c:forEach>
+                                <a class="${totalPages eq currentPage ? 'disabled' : ''}" href="/shop?page=${currentPage + 1}">&raquo;</a>
                             </div>
                         </div>
                     </div>
