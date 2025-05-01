@@ -44,14 +44,33 @@
                             <h3 class="fw-bold fs-4 my-3">Order with id = ${order.id}</h3>
                         </div>
                         <div class="order-content">
+                            <div class="row">
+                                <div class="col-6">
+                                    <table class="table">
+                                        <tr>
+                                            <th>Receiver</th>
+                                            <td>${order.receiverName}</td>
+                                        </tr>
+                                        <tr>
+                                            <th>Address</th>
+                                            <td>${order.receiverAddress}</td>
+                                        </tr>
+                                        <tr>
+                                            <th>Phone number</th>
+                                            <td>${order.receiverPhone}</td>
+                                        </tr>
+                                    </table>
+                                </div>
+                            </div>
+                            <br>
                             <table class="table">
                                 <thead>
                                     <tr>
-                                        <th scope="col">Sản phẩm</th>
-                                        <th scope="col">Tên</th>
-                                        <th scope="col">Giá</th>
-                                        <th scope="col">Số lượng</th>
-                                        <th scope="col">Thành tiền</th>
+                                        <th scope="col">Product</th>
+                                        <th scope="col">Name</th>
+                                        <th scope="col">Price</th>
+                                        <th scope="col">Quantity</th>
+                                        <th scope="col">Amount</th>
                                     </tr>
                                 </thead>
                                 <tbody>
