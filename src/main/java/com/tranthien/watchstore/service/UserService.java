@@ -1,7 +1,7 @@
 package com.tranthien.watchstore.service;
 
-import java.util.List;
-
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import com.tranthien.watchstore.domain.Role;
 import com.tranthien.watchstore.domain.User;
@@ -28,8 +28,8 @@ public class UserService {
         return this.roleRepository.findByName(roleName);
     }
 
-    public List<User> fetchUser(){
-        return this.userRepository.findAll();
+    public Page<User> fetchUser(Pageable pageable){
+        return this.userRepository.findAll(pageable);
     }
 
     public User getUserById(long id){
