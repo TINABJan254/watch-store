@@ -23,11 +23,11 @@
             <main class="content px-3 py-4">
                 <div class="container-fluid">
                     <div class="mb-3">
-                        <h3 class="fw-bold fs-4 mb-4">Thống kê</h3>
+                        <h3 class="fw-bold fs-4 mb-4">Statistics</h3>
                         <div class="row">
                             <div class="col-xl-4 col-md-6">
                                 <div class="card bg-primary text-white mb-4">
-                                    <div class="card-body">Số lượng User</div>
+                                    <div class="card-body">Total User (${countUsers})</div>
                                     <div class="card-footer d-flex align-items-center justify-content-between">
                                         <a class="small text-white stretched-link" href="/admin/user">View
                                             Details</a>
@@ -37,7 +37,7 @@
                             </div>
                             <div class="col-xl-4 col-md-6">
                                 <div class="card bg-danger text-white mb-4">
-                                    <div class="card-body">Số lượng Product</div>
+                                    <div class="card-body">Total Product (${countProducts})</div>
                                     <div class="card-footer d-flex align-items-center justify-content-between">
                                         <a class="small text-white stretched-link" href="/admin/product">View
                                             Details</a>
@@ -47,7 +47,7 @@
                             </div>
                             <div class="col-xl-4 col-md-6">
                                 <div class="card bg-success text-white mb-4">
-                                    <div class="card-body">Số lượng Order</div>
+                                    <div class="card-body">Total Order (${countOrders})</div>
                                     <div class="card-footer d-flex align-items-center justify-content-between">
                                         <a class="small text-white stretched-link" href="/admin/order">View
                                             Details</a>
