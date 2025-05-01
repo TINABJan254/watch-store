@@ -4,6 +4,9 @@ import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -13,6 +16,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 
 import com.tranthien.watchstore.domain.Order;
+import com.tranthien.watchstore.domain.Product;
 import com.tranthien.watchstore.domain.User;
 import com.tranthien.watchstore.domain.dto.RegisterDTO;
 import com.tranthien.watchstore.service.OrderService;
@@ -45,7 +49,12 @@ public class HomePageController {
 
     @GetMapping("/shop")
     public String getShoppingPage(Model model){
-        model.addAttribute("products", this.productService.fetchProduct());
+
+        Pageable pageable = PageRequest.of(0, 10);
+        Page<Product> productPage = this.productService.fetchProduct(pageable);
+        List<Product> products = productPage.getContent();
+
+        model.addAttribute("products", products);
         return "client/homepage/shop";
     }
 
