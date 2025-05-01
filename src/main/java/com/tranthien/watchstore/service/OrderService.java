@@ -3,6 +3,8 @@ package com.tranthien.watchstore.service;
 import java.util.List;
 import java.util.Optional;
 
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import com.tranthien.watchstore.domain.Order;
@@ -22,8 +24,8 @@ public class OrderService {
         this.orderDetailRepository = orderDetailRepository;
     }
 
-    public List<Order> fetchOrder(){
-        return this.orderRepository.findAll();
+    public Page<Order> fetchOrder(Pageable pageable){
+        return this.orderRepository.findAll(pageable);
     }
 
     public Order handleSaveOrder(Order order){

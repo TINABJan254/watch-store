@@ -104,12 +104,12 @@
                             </div>
                         </div>
                         <div class="inner-pagination">
-                            <a href="#">&laquo;</a>
-                            <a href="#">1</a>
-                            <a href="#" class="active">2</a>
-                            <a href="#">3</a>
-                            <a href="#">4</a>
-                            <a href="#">&raquo;</a>
+                            <a class="${1 eq currentPage ? 'page-link disabled' : 'page-link'}" href="/admin/order?page=${currentPage - 1}">&laquo;</a>
+
+                            <c:forEach begin="0" end="${totalPages - 1}" varStatus="loop">
+                                <a class="${(loop.index + 1) eq currentPage ? 'page-link active' : 'page-link'}" href="/admin/order?page=${loop.index + 1}">${loop.index + 1}</a>
+                            </c:forEach>
+                            <a class="${totalPages eq currentPage ? 'page-link disabled' : 'page-link'}" href="/admin/order?page=${currentPage + 1}">&raquo;</a>
                         </div>
                     </div>
                 </div>
