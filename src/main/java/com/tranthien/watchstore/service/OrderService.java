@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 
 import com.tranthien.watchstore.domain.Order;
 import com.tranthien.watchstore.domain.OrderDetail;
+import com.tranthien.watchstore.domain.User;
 import com.tranthien.watchstore.repository.OrderDetailRepository;
 import com.tranthien.watchstore.repository.OrderRepository;
 
@@ -35,6 +36,10 @@ public class OrderService {
 
     public Optional<Order> getOrderById(long id){
         return this.orderRepository.findById(id);
+    }
+
+    public List<Order> fetchOrderByUser(User user) {
+        return this.orderRepository.findByUser(user);
     }
 
     public void handleUpdateOrder(Order order){

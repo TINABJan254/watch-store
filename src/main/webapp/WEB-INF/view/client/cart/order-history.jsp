@@ -1,6 +1,7 @@
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <!DOCTYPE html>
 <html>
 
@@ -66,61 +67,57 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                <tr>
-                                    <td colspan="2">Order ID = 1</td>
-                                    <td colspan="1">
-                                        <h5>123$</h5>
-                                    </td>
-                                    <td>
-                                        <h5 style="font-weight: bold;">Hoàn thành</h5>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td class="product__cart__item">
-                                        <div class="product__cart__item__pic">
-                                            <img src="/images/product/casio.jpg" alt="">
-                                        </div>
-                                        <div class="product__cart__item__text">
-                                            <h6>Đồng hồ</h6>
-                                            <h5>$98.49</h5>
-                                        </div>
-                                    </td>
-                                    <td class="quantity__item">
-                                        <div class="quantity">
-                                            <div class="pro-qty-2">
-                                                <input type="text" value="1">
-                                            </div>
-                                        </div>
-                                    </td>
-                                    <td class="cart__price">$ 30.00</td>
-                                </tr>
-                                <tr>
-                                    <td class="product__cart__item">
-                                        <div class="product__cart__item__pic">
-                                            <img src="/images/product/casio.jpg" alt="">
-                                        </div>
-                                        <div class="product__cart__item__text">
-                                            <h6>Diagonal Textured Cap</h6>
-                                            <h5>$98.49</h5>
-                                        </div>
-                                    </td>
-                                    <td class="quantity__item">
-                                        <div class="quantity">
-                                            <div class="pro-qty-2">
-                                                <input type="text" value="1">
-                                            </div>
-                                        </div>
-                                    </td>
-                                    <td class="cart__price">$ 32.50</td>
-                                    <td></td>
-                                </tr>
+                                <c:if test="${ empty orders}">
+                                    <tr>
+                                        <td colspan="6">
+                                            Bạn chưa mua đơn hàng nào
+                                        </td>
+                                    </tr>
+                                </c:if>
+                                <c:forEach var="order" items="${orders}">
+                                    <tr>
+                                        <td colspan="2">Order ID = ${order.id}</td>
+                                        <td colspan="1">
+                                            <h5><fmt:formatNumber type="number" value="${order.totalPrice}" /> đ</h5>
+                                        </td>
+                                        <td>
+                                            <h5 style="font-weight: bold;">
+                                                <c:if test="${order.status == 'PENDING'}">Đang chờ xử lý</c:if>
+                                                <c:if test="${order.status == 'SHIPPING'}">Đang giao</c:if>
+                                                <c:if test="${order.status == 'CANCEL'}">Đã hủy</c:if>
+                                                <c:if test="${order.status == 'COMPLETE'}">Hoàn thành</c:if>
+                                            </h5>
+                                        </td>
+                                    </tr>
+                                    <c:forEach var="orderDetail" items="${order.orderDetails}">
+                                        <tr>
+                                            <td class="product__cart__item">
+                                                <div class="product__cart__item__pic">
+                                                    <img src="/images/product/${orderDetail.product.image}" alt="">
+                                                </div>
+                                                <div class="product__cart__item__text">
+                                                    <h6>${orderDetail.product.name}</h6>
+                                                    <h5><fmt:formatNumber type="number" value="${orderDetail.price}" /> đ</h5>
+                                                </div>
+                                            </td>
+                                            <td class="quantity__item">
+                                                <div class="quantity">
+                                                    <div class="pro-qty-3">
+                                                        <input type="text" value="x${orderDetail.quantity}">
+                                                    </div>
+                                                </div>
+                                            </td>
+                                            <td class="cart__price"><fmt:formatNumber type="number" value="${orderDetail.price * orderDetail.quantity}" /> đ</td>
+                                        </tr>
+                                    </c:forEach>
+                                </c:forEach>
                             </tbody>
                         </table>
                     </div>
                     <div class="row">
                         <div class="col-lg-6 col-md-6 col-sm-6">
                             <div class="continue__btn">
-                                <a href="#">Tiếp tục mua sắm</a>
+                                <a href="/shop">Tiếp tục mua sắm</a>
                             </div>
                         </div>
                         <!-- <div class="col-lg-6 col-md-6 col-sm-6">

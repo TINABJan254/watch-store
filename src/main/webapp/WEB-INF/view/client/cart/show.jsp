@@ -66,6 +66,13 @@
                                 </tr>
                             </thead>
                             <tbody>
+                                <c:if test="${ empty cartDetails}">
+                                    <tr>
+                                        <td colspan="6">
+                                            Chưa có sản phẩm nào được thêm vào giỏ hàng
+                                        </td>
+                                    </tr>
+                                </c:if>
                                 <c:forEach var="cartDetail" items="${cartDetails}" varStatus="status">
                                     <tr>
                                         <td class="product__cart__item">

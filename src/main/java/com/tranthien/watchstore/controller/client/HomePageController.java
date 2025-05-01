@@ -1,5 +1,9 @@
 package com.tranthien.watchstore.controller.client;
 
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.List;
+
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -8,11 +12,15 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 
+import com.tranthien.watchstore.domain.Order;
 import com.tranthien.watchstore.domain.User;
 import com.tranthien.watchstore.domain.dto.RegisterDTO;
+import com.tranthien.watchstore.service.OrderService;
 import com.tranthien.watchstore.service.ProductService;
 import com.tranthien.watchstore.service.UserService;
 
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpSession;
 import jakarta.validation.Valid;
 
 @Controller
@@ -21,11 +29,13 @@ public class HomePageController {
     private final UserService userService;
     private final PasswordEncoder passwordEncoder;
     private final ProductService productService;
+    private final OrderService orderService;
 
-    public HomePageController(UserService userService, PasswordEncoder passwordEncoder, ProductService productService){
+    public HomePageController(UserService userService, PasswordEncoder passwordEncoder, ProductService productService, OrderService orderService){
         this.userService = userService;
         this.passwordEncoder = passwordEncoder;
         this.productService = productService;
+        this.orderService = orderService;
     }
 
     @GetMapping("/")
@@ -73,7 +83,24 @@ public class HomePageController {
     }
 
     @GetMapping("/order-history")
-    public String getHistoryPage(){
+    public String getHistoryPage(Model model, HttpServletRequest request){
+        HttpSession session = request.getSession(false);
+        User user = this.userService.getUserById((long)session.getAttribute("id"));
+        List<Order> orders = this.orderService.fetchOrderByUser(user);
+
+        if (orders != null) {
+            Collections.sort(orders, new Comparator<Order>() {
+                @Override
+                public int compare(Order o1, Order o2){
+                    if (o1.getId() > o2.getId()) {
+                        return -1;
+                    }
+                    return 1;
+                }
+            });
+            model.addAttribute("orders", orders);
+        }
+
         return "client/cart/order-history";
     }
 
