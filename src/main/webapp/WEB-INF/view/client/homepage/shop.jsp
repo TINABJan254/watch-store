@@ -207,11 +207,31 @@
                     <div class="row">
                         <div class="col-lg-12">
                             <div class="product__pagination">
-                                <a class="${1 eq currentPage ? 'disabled' : ''}" href="/shop?page=${currentPage - 1}">&laquo;</a>
+                                <a class="${1 eq currentPage ? 'disabled' : ''}" href="/shop?limit=${limit}&page=${currentPage - 1}">&laquo;</a>
                                 <c:forEach begin="0" end="${totalPages - 1}" varStatus="loop">
-                                    <a class="${(loop.index + 1) eq currentPage ? 'active' : ''}" href="/shop?page=${loop.index + 1}">${loop.index + 1}</a>
+                                    <a class="${(loop.index + 1) eq currentPage ? 'active' : ''}" href="/shop?limit=${limit}&page=${loop.index + 1}">${loop.index +
+                                        1}</a>
                                 </c:forEach>
-                                <a class="${totalPages eq currentPage ? 'disabled' : ''}" href="/shop?page=${currentPage + 1}">&raquo;</a>
+                                <a class="${totalPages eq currentPage ? 'disabled' : ''}" href="/shop?limit=${limit}&page=${currentPage + 1}">&raquo;</a>
+                                <div class="shop__product__option__right">
+                                    <!-- <p>Size:</p>
+                                    <select>
+                                        <option value="">5</option>
+                                        <option value="">10</option>
+                                        <option value="">20</option>
+                                    </select> -->
+                                    <form method="get" action="/shop">
+                                        <p>Size:</p>
+                                        <select name="limit" onchange="this.form.page.value = 1; this.form.submit()">
+                                            <option value="3" ${limit == 3 ? 'selected' : ''}>3</option>
+                                            <option value="6" ${limit == 6 ? 'selected' : ''}>6</option>
+                                            <option value="9" ${limit == 9 ? 'selected' : ''}>9</option>
+                                            <option value="12" ${limit == 12 ? 'selected' : ''}>12</option>
+                                            <option value="20" ${limit == 20 ? 'selected' : ''}>20</option>
+                                        </select>
+                                        <input type="hidden" name="page" value="${currentPage}" />
+                                    </form>
+                                </div>
                             </div>
                         </div>
                     </div>

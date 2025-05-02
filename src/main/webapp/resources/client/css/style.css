@@ -1066,6 +1066,16 @@ ol {
 	color: gray;
 }
 
+.product__pagination .shop__product__option__right {
+	padding-top: 25px; 
+	display: inline-block;
+}
+
+.product__pagination .shop__product__option__right .nice-select span.current {
+	padding-left: 0px;
+	padding-right: 0px;
+}
+
 /*---------------------
   Shop
 -----------------------*/

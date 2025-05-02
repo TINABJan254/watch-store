@@ -50,9 +50,11 @@ public class HomePageController {
     }
 
     @GetMapping("/shop")
-    public String getShoppingPage(Model model, @RequestParam("page") Optional<String> pageOptional){
+    public String getShoppingPage(Model model, @RequestParam("page") Optional<String> pageOptional,  
+            @RequestParam("limit") Optional<String> limitOptional){
 
         int page = 1;
+        int limit = 9;
         try {
             if (pageOptional.isPresent()) {
                 // Convert from String to int
@@ -60,18 +62,23 @@ public class HomePageController {
             } else {
                 // page = 1
             }
+
+            if (limitOptional.isPresent()) {
+                limit = Integer.parseInt(limitOptional.get());
+            }
         } catch (Exception e) {
             // TODO: handle exception
         }
 
-        Pageable pageable = PageRequest.of(page - 1, 2);
+        Pageable pageable = PageRequest.of(page - 1, limit);
         Page<Product> productPage = this.productService.fetchProduct(pageable);
         List<Product> products = productPage.getContent();
 
         model.addAttribute("products", products);
         model.addAttribute("currentPage", page);
         model.addAttribute("totalPages", productPage.getTotalPages());
-        
+        model.addAttribute("limit", limit);
+
         return "client/homepage/shop";
     }
 
