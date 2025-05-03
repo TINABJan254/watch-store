@@ -810,18 +810,24 @@ ol {
 	margin-right: 10px;
 } */
 
-.shop__sidebar__categories ul li a,
-.shop__sidebar__price ul li a,
-.shop__sidebar__brand ul li a {
+.shop__sidebar__categories ul li a, label,
+.shop__sidebar__price ul li a, label,
+.shop__sidebar__brand ul li a, label {
 	color: #b7b7b7;
 	font-size: 15px;
 	line-height: 32px;
 }
 
-.shop__sidebar__categories ul li a:hover,
-.shop__sidebar__price ul li a:hover,
-.shop__sidebar__brand ul li a:hover {
+.shop__sidebar__categories ul li a:hover, label:hover,
+.shop__sidebar__price ul li a:hover, label:hover,
+.shop__sidebar__brand ul li a:hover, label:hover {
 	color: #111111;
+}
+
+.shop__sidebar__categories ul li label,
+.shop__sidebar__price ul li label,
+.shop__sidebar__brand ul li label {
+	margin-bottom: 0px;
 }
 
 .shop__sidebar__categories ul{

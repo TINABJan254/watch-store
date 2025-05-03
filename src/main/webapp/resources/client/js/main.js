@@ -258,6 +258,99 @@
         return formatted;
     }
 
+
+    // handle filter product
+    $('#btnFilter').click(function (event) {
+        event.preventDefault();
+
+        console.log('clicked');
+
+        let typeArr = []
+        let factoryArr = []
+        let priceArr = []
+
+        //type
+        $("#productFilter .shop__sidebar__categories .filter-checkbox:checked").each(function () {
+            typeArr.push($(this).val());
+        });
+
+        // factory
+        $("#productFilter .shop__sidebar__brand .filter-checkbox:checked").each(function () {
+            factoryArr.push($(this).val());
+        });
+
+        //price
+        $("#productFilter .shop__sidebar__price .filter-checkbox:checked").each(function () {
+            priceArr.push($(this).val());
+        });
+
+        //sort order
+        let sortValue = $('#sort_select').val();
+
+        const currentUrl = new URL(window.location.href);
+        const searchParams = currentUrl.searchParams;
+
+        // Add or update query parameters
+        searchParams.set('page', '1');
+        searchParams.set('sort', sortValue);
+
+        //reset URL
+        searchParams.delete('factory');
+        searchParams.delete('type');
+        searchParams.delete('price');
+
+        if (factoryArr.length > 0) {
+            searchParams.set('factory', factoryArr.join(','));
+        }
+
+        if (typeArr.length > 0) {
+            searchParams.set('type', typeArr.join(','));
+        }
+
+        if (priceArr.length > 0) {
+            searchParams.set('price', priceArr.join(','));
+        }
+
+        // Update the URL and reload the page
+        window.location.href = currentUrl.toString();
+    });
+
+    /*------------------
+        Handle auto checkbox after reload page
+    --------------------*/
+    const params = new URLSearchParams(window.location.search);
+    
+    // Set checkboxes for 'type'
+    if (params.has('type')) {
+        const types = params.get('type').split(',');
+        types.forEach(type => {
+            $(`#productFilter .shop__sidebar__categories .filter-checkbox[value="${type}"]`).prop('checked', true);
+        });
+    }
+
+    // Set checkboxes for 'factory'
+    if (params.has('factory')) {
+        const factories = params.get('factory').split(',');
+        factories.forEach(factory => {
+            $(`#productFilter .shop__sidebar__brand .filter-checkbox[value="${factory}"]`).prop('checked', true);
+        });
+    }
+
+    // Set checkboxes for 'factory'
+    if (params.has('price')) {
+        const prices = params.get('price').split(',');
+        prices.forEach(price => {
+            $(`#productFilter .shop__sidebar__price .filter-checkbox[value="${price}"]`).prop('checked', true);
+        });
+    }
+
+    // Set sort select
+    if (params.has('sort')) {
+        const sortValue = params.get('sort');
+        $('#sort_select').val(sortValue); 
+        $('#sort_select').niceSelect('update');
+    }
+
     /*------------------
         Achieve Counter
     --------------------*/

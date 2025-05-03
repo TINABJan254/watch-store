@@ -1,5 +1,7 @@
 package com.tranthien.watchstore.controller.client;
 
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
@@ -8,6 +10,7 @@ import java.util.Optional;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -19,7 +22,9 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import com.tranthien.watchstore.domain.Order;
 import com.tranthien.watchstore.domain.Product;
+import com.tranthien.watchstore.domain.Product_;
 import com.tranthien.watchstore.domain.User;
+import com.tranthien.watchstore.domain.dto.ProductCriteriaDTO;
 import com.tranthien.watchstore.domain.dto.RegisterDTO;
 import com.tranthien.watchstore.service.OrderService;
 import com.tranthien.watchstore.service.ProductService;
@@ -50,34 +55,78 @@ public class HomePageController {
     }
 
     @GetMapping("/shop")
-    public String getShoppingPage(Model model, @RequestParam("page") Optional<String> pageOptional,  
-            @RequestParam("limit") Optional<String> limitOptional){
+    public String getShoppingPage(Model model, ProductCriteriaDTO productCriteriaDTO, HttpServletRequest request){
 
         int page = 1;
         int limit = 9;
         try {
-            if (pageOptional.isPresent()) {
+            if (productCriteriaDTO.getPage().isPresent()) {
                 // Convert from String to int
-                page = Integer.parseInt(pageOptional.get());
-            } else {
-                // page = 1
+                page = Integer.parseInt(productCriteriaDTO.getPage().get());
             }
 
-            if (limitOptional.isPresent()) {
-                limit = Integer.parseInt(limitOptional.get());
+            if (productCriteriaDTO.getLimit().isPresent()) {
+                limit = Integer.parseInt(productCriteriaDTO.getLimit().get());
             }
         } catch (Exception e) {
             // TODO: handle exception
         }
 
+        // Sort
         Pageable pageable = PageRequest.of(page - 1, limit);
-        Page<Product> productPage = this.productService.fetchProduct(pageable);
-        List<Product> products = productPage.getContent();
+        if (productCriteriaDTO.getSort() != null && productCriteriaDTO.getSort().isPresent()) {
+            String sort = productCriteriaDTO.getSort().get();
+            if (sort.equals("asc")) {
+                pageable = PageRequest.of(page - 1, limit, Sort.by(Product_.PRICE).ascending());
+            } else if (sort.equals("desc")) {
+                pageable = PageRequest.of(page - 1, limit, Sort.by(Product_.PRICE).descending());
+            } else if (sort.equals("none")) {
+                pageable = PageRequest.of(page - 1, limit);
+            }
+        }
+
+        // double minPrice = minPriceOptional.isPresent() ? Double.parseDouble(minPriceOptional.get()) : 0;
+        // double maxPrice = maxPriceOptional.isPresent() ? Double.parseDouble(maxPriceOptional.get()) : 0;
+        // String factory = factoryOptional.isPresent() ? factoryOptional.get() : "";
+        // String type = typeOptional.isPresent() ? typeOptional.get() : "";
+        // List<String> factory = Arrays.asList(factoryOptional.get().split(","));
+        // List<String> type = Arrays.asList(typeOptional.get().split(","));
+        // String priceRange = priceRangeOptional.isPresent() ? priceRangeOptional.get() : "";
+        // List<String> priceRange = Arrays.asList(priceRangeOptional.isPresent() ? priceRangeOptional.get().split(",") : "".split(","));
+
+        // Page<Product> productPage = this.productService.fetchProductByMinPrice(pageable, minPrice);
+        // Page<Product> productPage = this.productService.fetchProductByMaxPrice(pageable, maxPrice);
+        // Page<Product> productPage = this.productService.fetchProductByFactory(pageable, factory);
+        // Page<Product> productPage = this.productService.fetchProductByMultiFactory(pageable, factory);
+        // Page<Product> productPage = this.productService.fetchProductByMultiType(pageable, type);
+        // Page<Product> productPage = this.productService.fetchProductByMultiPriceRange(pageable, priceRange);
+
+        Page<Product> productPage = this.productService.fetchProductWithSpecs(pageable, productCriteriaDTO);
+
+        List<Product> products = productPage.getContent().size() > 0 ? productPage.getContent() : new ArrayList<>();
+
+        String queryString = request.getQueryString();
+        if (queryString != null && !queryString.isBlank()) {
+            // remove page param
+            queryString = queryString.replace("&page=" + page, "");
+            queryString = queryString.replace("limit=" + limit, "");
+        }
+
 
         model.addAttribute("products", products);
         model.addAttribute("currentPage", page);
         model.addAttribute("totalPages", productPage.getTotalPages());
         model.addAttribute("limit", limit);
+        model.addAttribute("queryString", queryString);
+
+        /* Console log */
+        System.out.println(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>");
+        System.out.println(">>>> Limit: " + limit + " " + page);
+        for (Product p : products) {
+            System.out.println(">>>> ID:" + p.getId() + ",  Name:" + p.getName());
+        }
+        System.out.println(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>");
+        /* End console log */
 
         return "client/homepage/shop";
     }

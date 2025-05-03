@@ -63,7 +63,7 @@
                             </form>
                         </div>
                         <div class="shop__sidebar__accordion">
-                            <div class="accordion" id="accordionExample">
+                            <div class="accordion" id="productFilter">
                                 <div class="card">
                                     <div class="card-heading">
                                         <span>Loại</span>
@@ -72,16 +72,20 @@
                                         <div class="shop__sidebar__categories">
                                             <ul class="nice-scroll">
                                                 <li>
-                                                    <input type="checkbox">
-                                                    <a href="#">Đồng hồ thông minh</a>
+                                                    <input class="filter-checkbox" type="checkbox" value="Smart" id="type-1">
+                                                    <label for="type-1">Đồng hồ thông minh</label>
                                                 </li>
                                                 <li>
-                                                    <input type="checkbox">
-                                                    <a href="#">Đồng hồ cơ</a>
+                                                    <input class="filter-checkbox" type="checkbox" value="Analog" id="type-2">
+                                                    <label for="type-2">Đồng hồ kim</label>
                                                 </li>
                                                 <li>
-                                                    <input type="checkbox">
-                                                    <a href="#">Đồng hồ thể thao</a>
+                                                    <input class="filter-checkbox" type="checkbox" value="Digital" id="type-3">
+                                                    <label for="type-3">Đồng hồ điện tử</label>
+                                                </li>
+                                                <li>
+                                                    <input class="filter-checkbox" type="checkbox" value="Diver" id="type-4">
+                                                    <label for="type-4">Đồng hồ bơi</label>
                                                 </li>
                                             </ul>
                                         </div>
@@ -95,20 +99,29 @@
                                         <div class="shop__sidebar__brand">
                                             <ul>
                                                 <li>
-                                                    <input type="checkbox">
-                                                    <a href="#">Rolex</a>
+                                                    <input class="filter-checkbox" type="checkbox" value="ROLEX" id="factory-1">
+                                                    <label for="factory-1">Rolex</label>
                                                 </li>
                                                 <li>
-                                                    <input type="checkbox">
-                                                    <a href="#">Casio</a>
+                                                    <input class="filter-checkbox" type="checkbox" value="APPLE" id="factory-2">
+                                                    <label for="factory-2">Apple</label>
                                                 </li>
                                                 <li>
-                                                    <input type="checkbox">
-                                                    <a href="#">Apple</a>
+                                                    <input class="filter-checkbox" type="checkbox" value="SEIKO" id="factory-3">
+                                                    <label for="factory-3">Seiko</label>
                                                 </li>
                                                 <li>
-                                                    <input type="checkbox">
-                                                    <a href="#">Gucci</a>
+                                                    <input class="filter-checkbox" type="checkbox" value="ORIENT" id="factory-4">
+                                                    <label for="factory-4">Orient</label>
+                                                </li>
+                                                <li>
+                                                    <input class="filter-checkbox" type="checkbox" value="CITIZEN" id="factory-5">
+                                                    <label for="factory-5">Citizen</label>
+                                                </li>
+                                                
+                                                <li>
+                                                    <input class="filter-checkbox" type="checkbox" value="CASIO" id="factory-6">
+                                                    <label for="factory-6">Casio</label>
                                                 </li>
                                             </ul>
                                         </div>
@@ -122,19 +135,37 @@
                                         <div class="shop__sidebar__price">
                                             <ul>
                                                 <li>
-                                                    <input type="checkbox">
-                                                    <a href="#">$0.00 - $50.00</a>
+                                                    <input class="filter-checkbox" type="checkbox" value="lt-1m" id="price-1">
+                                                    <!-- <a href="#">Dưới 1 triệu</a> -->
+                                                    <label for="price-1">Dưới 1 triệu</label>
                                                 </li>
                                                 <li>
-                                                    <input type="checkbox">
-                                                    <a href="#">$50.00 - $100.00</a>
+                                                    <input class="filter-checkbox" type="checkbox" value="1m-3m" id="price-2">
+                                                    <label for="price-2">1 triệu - 3 triệu</label>
                                                 </li>
                                                 <li>
-                                                    <input type="checkbox">
-                                                    <a href="#">$100.00 - $150.00</a>
+                                                    <input class="filter-checkbox" type="checkbox" value="3m-6m" id="price-3">
+                                                    <label for="price-3">3 triệu - 6 triệu</label>
+                                                </li>
+                                                <li>
+                                                    <input class="filter-checkbox" type="checkbox" value="6m-9m" id="price-4">
+                                                    <label for="price-4">6 triệu - 9 triệu</label>
+                                                </li>
+                                                <li>
+                                                    <input class="filter-checkbox" type="checkbox" value="9m-15m" id="price-5">
+                                                    <label for="price-5">9 triệu - 15 triệu</label>
+                                                </li>
+                                                <li>
+                                                    <input class="filter-checkbox" type="checkbox" value="ge-15m" id="price-6">
+                                                    <label for="price-6">Trên 15 triệu</label>
                                                 </li>
                                             </ul>
                                         </div>
+                                    </div>
+                                </div>
+                                <div class="card">
+                                    <div id="btnFilter" class="continue__btn">
+                                            <a style="text-transform: none;" href="">Lọc</a>
                                     </div>
                                 </div>
                                 <!-- <div class="card">
@@ -164,15 +195,16 @@
                         <div class="row">
                             <div class="col-lg-6 col-md-6 col-sm-6">
                                 <div class="shop__product__option__left">
-                                    <p>Kết quả</p>
+                                    <p>Kết quả <c:if test="${totalPages == 0}">: Không tìm thấy sản phẩm phù hợp</c:if> </p>
                                 </div>
                             </div>
                             <div class="col-lg-6 col-md-6 col-sm-6">
                                 <div class="shop__product__option__right">
-                                    <p>Sắp xếp:</p>
-                                    <select>
-                                        <option value="">Cao đến thấp</option>
-                                        <option value="">Thấp đến cao</option>
+                                    <p>Sắp xếp theo giá:</p>
+                                    <select id="sort_select">
+                                        <option value="asc" id="sort-1">Tăng dần</option>
+                                        <option value="desc"id="sort-2">Giảm dần</option>
+                                        <option value="none"id="sort-3" selected>Không</option>
                                     </select>
                                 </div>
                             </div>
@@ -204,37 +236,39 @@
                         </c:forEach>
                     </div>
 
-                    <div class="row">
-                        <div class="col-lg-12">
-                            <div class="product__pagination">
-                                <a class="${1 eq currentPage ? 'disabled' : ''}" href="/shop?limit=${limit}&page=${currentPage - 1}">&laquo;</a>
-                                <c:forEach begin="0" end="${totalPages - 1}" varStatus="loop">
-                                    <a class="${(loop.index + 1) eq currentPage ? 'active' : ''}" href="/shop?limit=${limit}&page=${loop.index + 1}">${loop.index +
-                                        1}</a>
-                                </c:forEach>
-                                <a class="${totalPages eq currentPage ? 'disabled' : ''}" href="/shop?limit=${limit}&page=${currentPage + 1}">&raquo;</a>
-                                <div class="shop__product__option__right">
-                                    <!-- <p>Size:</p>
-                                    <select>
-                                        <option value="">5</option>
-                                        <option value="">10</option>
-                                        <option value="">20</option>
-                                    </select> -->
-                                    <form method="get" action="/shop">
-                                        <p>Size:</p>
-                                        <select name="limit" onchange="this.form.page.value = 1; this.form.submit()">
-                                            <option value="3" ${limit == 3 ? 'selected' : ''}>3</option>
-                                            <option value="6" ${limit == 6 ? 'selected' : ''}>6</option>
-                                            <option value="9" ${limit == 9 ? 'selected' : ''}>9</option>
-                                            <option value="12" ${limit == 12 ? 'selected' : ''}>12</option>
-                                            <option value="20" ${limit == 20 ? 'selected' : ''}>20</option>
-                                        </select>
-                                        <input type="hidden" name="page" value="${currentPage}" />
-                                    </form>
+                    <c:if test="${totalPages > 0}">
+                        <div class="row">
+                            <div class="col-lg-12">
+                                <div class="product__pagination">
+                                    <a class="${1 eq currentPage ? 'disabled' : ''}" href="/shop?limit=${limit}&page=${currentPage - 1}${queryString}">&laquo;</a>
+                                    <c:forEach begin="0" end="${totalPages - 1}" varStatus="loop">
+                                        <a class="${(loop.index + 1) eq currentPage ? 'active' : ''}" href="/shop?limit=${limit}&page=${loop.index + 1}${queryString}">${loop.index +
+                                            1}</a>
+                                    </c:forEach>
+                                    <a class="${totalPages eq currentPage ? 'disabled' : ''}" href="/shop?limit=${limit}&page=${currentPage + 1}${queryString}">&raquo;</a>
+                                    <div class="shop__product__option__right">
+                                        <!-- <p>Size:</p>
+                                        <select>
+                                            <option value="">5</option>
+                                            <option value="">10</option>
+                                            <option value="">20</option>
+                                        </select> -->
+                                        <form method="get" action="/shop">
+                                            <p>Size:</p>
+                                            <select name="limit" onchange="this.form.page.value = 1; this.form.submit()">
+                                                <option value="3" ${limit == 3 ? 'selected' : ''}>3</option>
+                                                <option value="6" ${limit == 6 ? 'selected' : ''}>6</option>
+                                                <option value="9" ${limit == 9 ? 'selected' : ''}>9</option>
+                                                <option value="12" ${limit == 12 ? 'selected' : ''}>12</option>
+                                                <option value="20" ${limit == 20 ? 'selected' : ''}>20</option>
+                                            </select>
+                                            <input type="hidden" name="page" value="${currentPage}" />
+                                        </form>
+                                    </div>
                                 </div>
                             </div>
                         </div>
-                    </div>
+                    </c:if>
                 </div>
             </div>
         </div>
