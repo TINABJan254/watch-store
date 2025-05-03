@@ -253,7 +253,7 @@
                                             <option value="">10</option>
                                             <option value="">20</option>
                                         </select> -->
-                                        <form method="get" action="/shop">
+                                        <!-- <form method="get" action="/shop">
                                             <p>Size:</p>
                                             <select name="limit" onchange="this.form.page.value = 1; this.form.submit()">
                                                 <option value="3" ${limit == 3 ? 'selected' : ''}>3</option>
@@ -263,7 +263,16 @@
                                                 <option value="20" ${limit == 20 ? 'selected' : ''}>20</option>
                                             </select>
                                             <input type="hidden" name="page" value="${currentPage}" />
-                                        </form>
+                                        </form> -->
+                                        <p>Size:</p>
+                                        <select name="limit" id="limit_select">
+                                            <option value="3" ${limit == 3 ? 'selected' : ''}>3</option>
+                                            <option value="6" ${limit == 6 ? 'selected' : ''}>6</option>
+                                            <option value="9" ${limit == 9 ? 'selected' : ''}>9</option>
+                                            <option value="12" ${limit == 12 ? 'selected' : ''}>12</option>
+                                            <option value="20" ${limit == 20 ? 'selected' : ''}>20</option>
+                                        </select>
+                                        <input type="hidden" name="page" value="${currentPage}" />
                                     </div>
                                 </div>
                             </div>

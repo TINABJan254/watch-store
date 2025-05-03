@@ -315,6 +315,21 @@
         window.location.href = currentUrl.toString();
     });
 
+    //Handle reload page when select page limit
+    $('#limit_select').on('change', function() {
+        console.log("change change hehe");
+
+        var selectedLimit = $(this).val();
+
+        const currentUrl = new URL(window.location.href);
+        const searchParams = currentUrl.searchParams;
+
+        searchParams.set('limit', selectedLimit);
+        
+        window.location.href = currentUrl.toString();
+
+    });
+
     /*------------------
         Handle auto checkbox after reload page
     --------------------*/

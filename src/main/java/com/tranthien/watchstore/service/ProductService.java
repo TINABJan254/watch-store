@@ -42,18 +42,22 @@ public class ProductService {
         return this.productRepository.count();
     }
 
+    //Test
     public Page<Product> fetchProductByName(Pageable pageable, String productName) {
         return this.productRepository.findAll(ProductSpecs.nameLike(productName), pageable);
     }
 
+    //Test
     public Page<Product> fetchProductByMinPrice(Pageable pageable, double min) {
         return this.productRepository.findAll(ProductSpecs.minPrice(min), pageable);
     }
 
+    //Test
     public Page<Product> fetchProductByMaxPrice(Pageable pageable, double max) {
         return this.productRepository.findAll(ProductSpecs.maxPrice(max), pageable);
     }
 
+    //Test
     public Page<Product> fetchProductByPriceRange(Pageable pageable, String priceRange) {
         if (priceRange.equals("0m-to-1m")){
             double minPrice = 0;
@@ -118,18 +122,22 @@ public class ProductService {
 
     }
 
+    //Test
     public Page<Product> fetchProductByFactory(Pageable pageable, String factory) {
         return this.productRepository.findAll(ProductSpecs.factoryEqual(factory), pageable);
     }
 
+    //Test
     public Page<Product> fetchProductByMultiFactory(Pageable pageable, List<String> factory) {
         return this.productRepository.findAll(ProductSpecs.matchMultiFactory(factory), pageable);
     }
 
+    //Test
     public Page<Product> fetchProductByType(Pageable pageable, String type) {
         return this.productRepository.findAll(ProductSpecs.typeEqual(type), pageable);
     }
 
+    //Test
     public Page<Product> fetchProductByMultiType(Pageable pageable, List<String> type) {
         return this.productRepository.findAll(ProductSpecs.matchMultiType(type), pageable);
     }
