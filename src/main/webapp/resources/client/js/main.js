@@ -325,7 +325,8 @@
         const searchParams = currentUrl.searchParams;
 
         searchParams.set('limit', selectedLimit);
-        
+        searchParams.set('page', 1);
+
         window.location.href = currentUrl.toString();
 
     });

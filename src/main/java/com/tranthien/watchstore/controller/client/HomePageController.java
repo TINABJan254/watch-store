@@ -69,6 +69,10 @@ public class HomePageController {
             // TODO: handle exception
         }
 
+        if (limit > 20) {
+            limit = 20;
+        }
+
         // Sort
         Pageable pageable = PageRequest.of(page - 1, limit);
         if (productCriteriaDTO.getSort() != null && productCriteriaDTO.getSort().isPresent()) {

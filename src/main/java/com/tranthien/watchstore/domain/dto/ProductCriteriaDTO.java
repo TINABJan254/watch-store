@@ -10,6 +10,7 @@ public class ProductCriteriaDTO {
     private Optional<List<String>> type;
     private Optional<List<String>> price;
     private Optional<String> sort;
+    private Optional<String> search;
 
     public Optional<String> getPage() {
         return page;
@@ -59,5 +60,12 @@ public class ProductCriteriaDTO {
         this.sort = sort;
     }
 
+    public Optional<String> getSearch() {
+        return search;
+    }
+
+    public void setSearch(Optional<String> search) {
+        this.search = search;
+    }
     
 }

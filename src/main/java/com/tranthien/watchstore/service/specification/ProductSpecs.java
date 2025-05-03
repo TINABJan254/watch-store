@@ -13,14 +13,17 @@ public class ProductSpecs {
         return (root, query, criteriaBuilder) -> criteriaBuilder.like(root.get(Product_.NAME), "%" + name + "%");
     }
 
+    //Test
     public static Specification<Product> minPrice(double price) {
         return (root, query, criteriaBuilder) -> criteriaBuilder.ge(root.get(Product_.PRICE), price);
     }
 
+    //Test
     public static Specification<Product> maxPrice(double price) {
         return (root, query, criteriaBuilder) -> criteriaBuilder.le(root.get(Product_.PRICE), price);
     }
 
+    //Test
     public static Specification<Product> matchPriceRange(double min, double max) {
         return (root, query, criteriaBulder) -> criteriaBulder.and(
             criteriaBulder.ge(root.get(Product_.PRICE), min),
@@ -32,6 +35,7 @@ public class ProductSpecs {
         return (root, query, criteriaBulder) -> criteriaBulder.between(root.get(Product_.PRICE), min, max);
     }
 
+    //Test
     public static Specification<Product> factoryEqual(String factory) {
         return (root, query, criteriaBuilder) -> criteriaBuilder.equal(root.get(Product_.FACTORY), factory);
     }
@@ -40,6 +44,7 @@ public class ProductSpecs {
         return (root, query, criteriaBuilder) -> criteriaBuilder.in(root.get(Product_.FACTORY)).value(factory);
     }
 
+    //Test
     public static Specification<Product> typeEqual(String type) {
         return (root, query, criteriaBuilder) -> criteriaBuilder.equal(root.get(Product_.TYPE), type);
     } 

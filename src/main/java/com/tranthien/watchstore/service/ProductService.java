@@ -143,11 +143,16 @@ public class ProductService {
     }
 
     public Page<Product> fetchProductWithSpecs(Pageable pageable, ProductCriteriaDTO productCriteriaDTO) {
-        if (productCriteriaDTO.getType() == null && productCriteriaDTO.getFactory() == null && productCriteriaDTO.getPrice() == null) {
+        if (productCriteriaDTO.getSearch() == null && productCriteriaDTO.getType() == null && productCriteriaDTO.getFactory() == null && productCriteriaDTO.getPrice() == null) {
             return this.productRepository.findAll(pageable);
         }
 
         Specification<Product> combinedSpec = Specification.where(null);
+
+        if (productCriteriaDTO.getSearch() != null && productCriteriaDTO.getSearch().isPresent()) {
+            Specification<Product> currentSpec = ProductSpecs.nameLike(productCriteriaDTO.getSearch().get());
+            combinedSpec = combinedSpec.and(currentSpec);
+        }
 
         if (productCriteriaDTO.getType() != null && productCriteriaDTO.getType().isPresent()) {
             Specification<Product> currentSpec = ProductSpecs.matchMultiType(productCriteriaDTO.getType().get());
