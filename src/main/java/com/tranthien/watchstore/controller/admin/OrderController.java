@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import com.tranthien.watchstore.domain.Order;
+import com.tranthien.watchstore.domain.OrderDetail;
 import com.tranthien.watchstore.service.OrderService;
 
 @Controller
@@ -59,6 +60,16 @@ public class OrderController {
         model.addAttribute("totalPages", orderPage.getTotalPages());
         model.addAttribute("limit", limit);
 
+        /*Console log*/
+        System.out.println("-----------------------------------------------------------");
+        System.out.println(">>>>> Limit: " + limit + ", page: " + page);
+        for (Order od : orders) {
+            System.out.println(">>>>> ID: " + od.getId() + ", User: " + od.getUser().getFullName() + ", Total price: " + 
+                od.getTotalPrice() + ", Status: " + od.getStatus());
+        }
+        System.out.println("-----------------------------------------------------------");
+        /*End console log*/
+
         return "admin/order/show";
     }
 
@@ -66,6 +77,21 @@ public class OrderController {
     public String getOrderDetailPage(Model model, @PathVariable long id){
         Order order = this.orderService.getOrderById(id).get();
         model.addAttribute("order", order);
+
+        /*Console log*/
+        System.out.println("----------------------------------------------------");
+        System.out.println(">>>>> ID: " + id);
+        System.out.println(">>>>> Name: " + order.getReceiverName());
+        System.out.println(">>>>> Address: " + order.getReceiverAddress());
+        System.out.println(">>>>> Phone number: " + order.getReceiverPhone());
+        System.out.println(">>>>> Total price: " + order.getTotalPrice());
+        System.out.println("Order detail:");
+        for (OrderDetail od : order.getOrderDetails()) {
+            System.out.println(">>>>> Product: " + od.getProduct().getName() + ",  Quantity: " + od.getQuantity());
+        }
+        System.out.println("----------------------------------------------------");
+        /*End console log*/
+
         return "admin/order/detail";
     }
 
@@ -87,6 +113,12 @@ public class OrderController {
     @PostMapping("/admin/order/delete")
     public String deleteOrder(@RequestParam("id") Long id){
         this.orderService.handleDeleteOrderById(id);
+
+        /*Console log*/
+        System.out.println("----------------------------------------------------");
+        System.out.println(">>>>> Delete order with ID = " + id);
+        System.out.println("----------------------------------------------------");
+        /*End console log*/
 
         return "redirect:/admin/order";
     }
