@@ -225,7 +225,12 @@
                                         <!-- <a href="#" class="add-cart">+ Add To Cart</a> -->
                                         <form action="/add-product-to-cart/${product.id}" method="post">
                                             <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
-                                            <button>+ Add To Cart</button>
+                                            <c:if test = "${product.quantity == 0}">
+                                                <button>Hết hàng</button>
+                                            </c:if>
+                                            <c:if test = "${product.quantity != 0}">
+                                                <button>+ Add To Cart</button>
+                                            </c:if>
                                         </form>
                                         <h5>
                                             <fmt:formatNumber type="number" value="${product.price}"/> đ
