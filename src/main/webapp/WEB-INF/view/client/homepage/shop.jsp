@@ -226,7 +226,7 @@
                                         <form action="/add-product-to-cart/${product.id}" method="post">
                                             <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
                                             <c:if test = "${product.quantity == 0}">
-                                                <button>Hết hàng</button>
+                                                <button disabled>Hết hàng</button>
                                             </c:if>
                                             <c:if test = "${product.quantity != 0}">
                                                 <button>+ Add To Cart</button>
