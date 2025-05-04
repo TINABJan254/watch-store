@@ -104,26 +104,28 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="inner-pagination">
-                            <a class="${1 eq currentPage ? 'page-link disabled' : 'page-link'}" href="/admin/user?limit=${limit}&page=${currentPage - 1}">&laquo;</a>
-
-                            <c:forEach begin="0" end="${totalPages - 1}" varStatus="loop">
-                                <a class="${(loop.index + 1) eq currentPage ? 'page-link active' : 'page-link'}" href="/admin/user?limit=${limit}&page=${loop.index + 1}">${loop.index + 1}</a>
-                            </c:forEach>
-                            
-                            <a class="${totalPages eq currentPage ? 'page-link disabled' : 'page-link'}" href="/admin/user?limit=${limit}&page=${currentPage + 1}">&raquo;</a>
-                            
-                            <div class="option__page__limit">
-                                <p>Size:</p>
-                                <select name="limit" id="limit_select">
-                                    <option value="5" ${limit == 5 ? 'selected' : ''}>5</option>
-                                    <option value="10" ${limit == 10 ? 'selected' : ''}>10</option>
-                                    <option value="15" ${limit == 15 ? 'selected' : ''}>15</option>
-                                    <option value="20" ${limit == 20 ? 'selected' : ''}>20</option>
-                                </select>
-                                <input type="hidden" name="page" value="${currentPage}" />
+                        <c:if test="${totalPages > 0}">
+                            <div class="inner-pagination">
+                                <a class="${1 eq currentPage ? 'page-link disabled' : 'page-link'}" href="/admin/user?limit=${limit}&page=${currentPage - 1}">&laquo;</a>
+    
+                                <c:forEach begin="0" end="${totalPages - 1}" varStatus="loop">
+                                    <a class="${(loop.index + 1) eq currentPage ? 'page-link active' : 'page-link'}" href="/admin/user?limit=${limit}&page=${loop.index + 1}">${loop.index + 1}</a>
+                                </c:forEach>
+                                
+                                <a class="${totalPages eq currentPage ? 'page-link disabled' : 'page-link'}" href="/admin/user?limit=${limit}&page=${currentPage + 1}">&raquo;</a>
+                                
+                                <div class="option__page__limit">
+                                    <p>Size:</p>
+                                    <select name="limit" id="limit_select">
+                                        <option value="5" ${limit == 5 ? 'selected' : ''}>5</option>
+                                        <option value="10" ${limit == 10 ? 'selected' : ''}>10</option>
+                                        <option value="15" ${limit == 15 ? 'selected' : ''}>15</option>
+                                        <option value="20" ${limit == 20 ? 'selected' : ''}>20</option>
+                                    </select>
+                                    <input type="hidden" name="page" value="${currentPage}" />
+                                </div>
                             </div>
-                        </div>
+                        </c:if>
                     </div>
                 </div>
             </main>
