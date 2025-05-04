@@ -13,7 +13,7 @@
     <title>Admin manage</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
     <link href="https://cdn.lineicons.com/4.0/lineicons.css" rel="stylesheet" />
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+    <link rel="stylesheet" href="/admin/css/bootstrap.min.css"  />
     <link rel="stylesheet" href="/admin/css/style.css">
 
     <!-- JavaScript để cập nhật giá trị id -->
@@ -104,12 +104,24 @@
                             </div>
                         </div>
                         <div class="inner-pagination">
-                            <a class="${1 eq currentPage ? 'page-link disabled' : 'page-link'}" href="/admin/order?page=${currentPage - 1}">&laquo;</a>
+                            <a class="${1 eq currentPage ? 'page-link disabled' : 'page-link'}" href="/admin/order?limit=${limit}&page=${currentPage - 1}">&laquo;</a>
 
                             <c:forEach begin="0" end="${totalPages - 1}" varStatus="loop">
-                                <a class="${(loop.index + 1) eq currentPage ? 'page-link active' : 'page-link'}" href="/admin/order?page=${loop.index + 1}">${loop.index + 1}</a>
+                                <a class="${(loop.index + 1) eq currentPage ? 'page-link active' : 'page-link'}" href="/admin/order?limit=${limit}&page=${loop.index + 1}">${loop.index + 1}</a>
                             </c:forEach>
-                            <a class="${totalPages eq currentPage ? 'page-link disabled' : 'page-link'}" href="/admin/order?page=${currentPage + 1}">&raquo;</a>
+
+                            <a class="${totalPages eq currentPage ? 'page-link disabled' : 'page-link'}" href="/admin/order?limit=${limit}&page=${currentPage + 1}">&raquo;</a>
+                            
+                            <div class="option__page__limit">
+                                <p>Size:</p>
+                                <select name="limit" id="limit_select">
+                                    <option value="5" ${limit == 5 ? 'selected' : ''}>5</option>
+                                    <option value="10" ${limit == 10 ? 'selected' : ''}>10</option>
+                                    <option value="15" ${limit == 15 ? 'selected' : ''}>15</option>
+                                    <option value="20" ${limit == 20 ? 'selected' : ''}>20</option>
+                                </select>
+                                <input type="hidden" name="page" value="${currentPage}" />
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -118,7 +130,9 @@
             </div>
         </div>
     </div>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+    <script src="/admin/js/bootstrap.bundle.min.js" ></script>
+    <script src="/admin/js/jquery-3.7.1.min.js" ></script>
+    <script src="/admin/js/main.js"></script>    
 </body>
 
 </html>

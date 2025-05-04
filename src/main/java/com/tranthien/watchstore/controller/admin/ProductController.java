@@ -35,27 +35,38 @@ public class ProductController {
     }
     
     @GetMapping("/admin/product")
-    public String getProductPage(Model model, @RequestParam("page") Optional<String> pageOptional) {
+    public String getProductPage(Model model, 
+        @RequestParam("page") Optional<String> pageOptional,
+        @RequestParam("limit") Optional<String> limitOptional) {
         
         int page = 1;
+        int limit = 10;
         try {
             if (pageOptional.isPresent()) {
                 // Convert from String to int
                 page = Integer.parseInt(pageOptional.get());
-            } else {
-                // page = 1
+            }
+
+            if (limitOptional.isPresent()) {
+                limit = Integer.parseInt(limitOptional.get());
+                if (limit > 20) {
+                    limit = 20;
+                }
             }
         } catch (Exception e) {
             // TODO: handle exception
         }
+
         
-        Pageable pageable = PageRequest.of(page - 1, 2);
+        Pageable pageable = PageRequest.of(page - 1, limit);
         Page<Product> productPage = this.productService.fetchProduct(pageable);
         List<Product> products = productPage.getContent();
 
         model.addAttribute("products", products);
         model.addAttribute("currentPage", page);
         model.addAttribute("totalPages", productPage.getTotalPages());
+        model.addAttribute("limit", limit);
+
         return "admin/product/show";
     }
 

@@ -27,21 +27,29 @@ public class OrderController {
     }
     
     @GetMapping("/admin/order")
-    public String getOrderPage(Model model, @RequestParam("page") Optional<String> pageOptional){
+    public String getOrderPage(Model model, 
+        @RequestParam("page") Optional<String> pageOptional,
+        @RequestParam("limit") Optional<String> limitOptional){
 
         int page = 1;
+        int limit = 10;
         try {
             if (pageOptional.isPresent()) {
                 // Convert from String to int
                 page = Integer.parseInt(pageOptional.get());
-            } else {
-                // page = 1
+            } 
+
+            if (limitOptional.isPresent()) {
+                limit = Integer.parseInt(limitOptional.get());
+                if (limit > 20) {
+                    limit = 20;
+                }
             }
         } catch (Exception e) {
             // TODO: handle exception
         }
         
-        Pageable pageable = PageRequest.of(page - 1, 2);
+        Pageable pageable = PageRequest.of(page - 1, limit);
 
         Page<Order> orderPage = this.orderService.fetchOrder(pageable);
         List<Order> orders = orderPage.getContent();
@@ -49,6 +57,8 @@ public class OrderController {
         model.addAttribute("orders", orders);
         model.addAttribute("currentPage", page);
         model.addAttribute("totalPages", orderPage.getTotalPages());
+        model.addAttribute("limit", limit);
+
         return "admin/order/show";
     }
 

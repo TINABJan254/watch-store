@@ -217,6 +217,25 @@ a.sidebar-link:hover {
     border-radius: 5px;
 }
 
+.inner-pagination .option__page__limit {
+	text-align: right;
+}
+
+.inner-pagination .option__page__limit p {
+	display: inline-block;
+	margin-bottom: 0;
+    margin-top: 0;
+}
+
+.inner-pagination .option__page__limit select {
+	border: none;
+}
+
+.inner-pagination .option__page__limit {
+	display: inline-block;
+    padding: 8px 16px;
+}
+
 
 /* User update */
 .content .title {

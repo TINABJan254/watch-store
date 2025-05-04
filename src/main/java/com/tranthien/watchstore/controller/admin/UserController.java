@@ -38,27 +38,36 @@ public class UserController {
     }
 
     @GetMapping("/admin/user")
-    public String getUserPage(Model model, @RequestParam("page") Optional<String> pageOptional) {
+    public String getUserPage(Model model, 
+        @RequestParam("page") Optional<String> pageOptional,
+        @RequestParam("limit") Optional<String> limitOptional) {
 
         int page = 1;
+        int limit = 10;
         try {
             if (pageOptional.isPresent()) {
-                // Convert from String to int
                 page = Integer.parseInt(pageOptional.get());
-            } else {
-                // page = 1
+            } 
+
+            if (limitOptional.isPresent()) {
+                limit = Integer.parseInt(limitOptional.get());
+                if (limit > 20) {
+                    limit = 20;
+                }
             }
         } catch (Exception e) {
             // TODO: handle exception
         }
         
-        Pageable pageable = PageRequest.of(page - 1, 2);
+        Pageable pageable = PageRequest.of(page - 1, limit);
         Page<User> userPage = this.userService.fetchUser(pageable);
         List<User> users = userPage.getContent();
 
         model.addAttribute("users", users);
         model.addAttribute("currentPage", page);
         model.addAttribute("totalPages", userPage.getTotalPages());
+        model.addAttribute("limit", limit);
+        
         return "admin/user/show";
     }
 
