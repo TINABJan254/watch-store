@@ -38,7 +38,7 @@ public class Product {
     private double price;
 
     @NotNull
-    @Min(value = 1, message = "Quantiy must be greater than or equal to 1")
+    @Min(value = 0, message = "Quantiy must be greater than or equal to 0")
     private long quantity;
     private long sold;
 

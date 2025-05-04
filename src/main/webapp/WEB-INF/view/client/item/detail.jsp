@@ -76,9 +76,19 @@
                                     <span class="fa fa-angle-down inc qtybtn"></span>
                                 </div>
                             </div> -->
-                            <button form="add-to-cart-form" type="submit" class="primary-btn">
-                                add to cart
-                            </button>
+
+                            <c:if test="${product.quantity == 0}">
+                                <button class="primary-btn">
+                                    Hết hàng
+                                </button>
+                            </c:if>
+
+                            <c:if test="${product.quantity != 0}">
+                                <button form="add-to-cart-form" type="submit" class="primary-btn">
+                                    Thêm vào giỏ hàng
+                                </button>
+                            </c:if>
+                            
                             <form id="add-to-cart-form" action="/add-product-to-cart/${product.id}" method="post">
                                 <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
                             </form>

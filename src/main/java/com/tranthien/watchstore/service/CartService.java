@@ -80,6 +80,9 @@ public class CartService {
                     cartDetail.setQuantity(cartDetail.getQuantity() + 1);
                     this.cartDetailRepository.save(cartDetail);
                 }
+
+                product.setQuantity(product.getQuantity() - 1);
+                this.productService.handleSaveProduct(product);
             }
         }
     }
@@ -89,6 +92,10 @@ public class CartService {
         if (cartDetailOptional.isPresent()){
             CartDetail cartDetail = cartDetailOptional.get();
             Cart cart = cartDetail.getCart();
+
+            Product product = cartDetail.getProduct();
+            product.setQuantity(product.getQuantity() + cartDetail.getQuantity());
+            this.productService.handleSaveProduct(product);
 
             this.cartDetailRepository.deleteById(cartDetailId);
 
@@ -112,6 +119,21 @@ public class CartService {
             Optional<CartDetail> cartDetaiOptional = this.cartDetailRepository.findById(cartDetail.getId());
             if (cartDetaiOptional.isPresent()){
                 CartDetail curCartDetail = cartDetaiOptional.get();
+
+                Product product = curCartDetail.getProduct();
+
+                long r = curCartDetail.getQuantity() - cartDetail.getQuantity();
+                if (-r > product.getQuantity()) {
+                    curCartDetail.setQuantity(curCartDetail.getQuantity() + product.getQuantity());
+                    product.setQuantity(0);
+                    this.productService.handleSaveProduct(product);
+                    this.cartDetailRepository.save(curCartDetail);
+                    return;
+                }
+
+                product.setQuantity(product.getQuantity() + (curCartDetail.getQuantity() - cartDetail.getQuantity()));
+                this.productService.handleSaveProduct(product);
+
                 curCartDetail.setQuantity(cartDetail.getQuantity());
                 this.cartDetailRepository.save(curCartDetail);
             }
