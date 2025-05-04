@@ -21,6 +21,20 @@ public class ItemController {
     public String getItemDetailPage(@PathVariable long id, Model model){
         Product product = this.productService.getProductById(id);
         model.addAttribute("product", product);
+
+        /*Console log*/
+        System.out.println("----------------------View product detail-----------------------");
+        System.out.println(">>>>> Product name: " + product.getName());
+        System.out.println(">>>>> Quantity: " + product.getQuantity());
+        System.out.println(">>>>> Price: " + product.getPrice());
+        System.out.println(">>>>> Type: " + product.getType());
+        System.out.println(">>>>> Factory: " + product.getFactory());
+        System.out.println(">>>>> Short Desc: " + product.getShortDesc());
+        System.out.println(">>>>> Detail Desc: " + product.getDetailDesc());
+        System.out.println(">>>>> Image: " + product.getImage()); 
+        System.out.println("---------------------------------------------------------------");
+        /*End console log*/
+
         return "client/item/detail";
     }
 }

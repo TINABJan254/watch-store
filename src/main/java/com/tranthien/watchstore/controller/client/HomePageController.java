@@ -13,11 +13,13 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
+import org.springframework.validation.FieldError;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 
 import com.tranthien.watchstore.domain.Order;
+import com.tranthien.watchstore.domain.OrderDetail;
 import com.tranthien.watchstore.domain.Product;
 import com.tranthien.watchstore.domain.Product_;
 import com.tranthien.watchstore.domain.User;
@@ -121,12 +123,45 @@ public class HomePageController {
         model.addAttribute("queryString", queryString);
 
         /* Console log */
-        System.out.println(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>");
-        System.out.println(">>>> Limit: " + limit + " " + page);
-        for (Product p : products) {
-            System.out.println(">>>> ID:" + p.getId() + ",  Name:" + p.getName());
+        System.out.println("---------------------------------------------------------");
+        if (productCriteriaDTO.getSort() != null && productCriteriaDTO.getSort().isPresent()) {
+            System.out.println(">>>> Sort: " + productCriteriaDTO.getSort().get());
         }
-        System.out.println(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>");
+
+        if (productCriteriaDTO.getSearch() != null && productCriteriaDTO.getSearch().isPresent()) {
+            System.out.println(">>>> Search = " + productCriteriaDTO.getSearch().get());
+        }
+
+        if (productCriteriaDTO.getType() != null && productCriteriaDTO.getType().isPresent()) {
+            System.out.print(">>>> Filter type: ");
+            for (String x : productCriteriaDTO.getType().get()) {
+                System.out.print(x + ", ");
+            }
+            System.out.println();
+        }
+
+        if (productCriteriaDTO.getFactory() != null && productCriteriaDTO.getFactory().isPresent()) {
+            System.out.print(">>>> Filter factory: ");
+            for (String x : productCriteriaDTO.getFactory().get()) {
+                System.out.print(x + ", ");
+            }
+            System.out.println();
+        }
+        
+        if (productCriteriaDTO.getPrice() != null && productCriteriaDTO.getPrice().isPresent()) {
+            System.out.print(">>>> Filter price: ");
+            for (String x : productCriteriaDTO.getPrice().get()) {
+                System.out.print(x + ", ");
+            }
+            System.out.println();
+        }
+        
+        System.out.println(">>>> Limit: " + limit + ", Page: " + page);
+        System.out.println(">>>> Product List: ");
+        for (Product p : products) {
+            System.out.println("  ID: " + p.getId() + ",  Name: " + p.getName() + ", Price: " + p.getPrice());
+        }
+        System.out.println("---------------------------------------------------------");
         /* End console log */
 
         return "client/homepage/shop";
@@ -151,9 +186,23 @@ public class HomePageController {
     @PostMapping("/register")
     public String handleRegister(@ModelAttribute("registerUser") @Valid RegisterDTO registerDTO, BindingResult bindingResult){
         
+        List<FieldError> errors = bindingResult.getFieldErrors();
+        for (FieldError error : errors) {
+            System.out.println(">>>>>>>>>>> " + error.getField() + " - " + error.getDefaultMessage());
+        }
+
         if (bindingResult.hasErrors()){
             return "client/auth/register";
         }
+
+        /*Console log*/
+        System.out.println("----------------------------------------------------");
+        System.out.println(">>>>> First name: " + registerDTO.getFirstName());
+        System.out.println(">>>>> Last name: " + registerDTO.getLastName());
+        System.out.println(">>>>> Email: " + registerDTO.getEmail());
+        System.out.println(">>>>> Password: " + registerDTO.getPassword());
+        System.out.println("----------------------------------------------------");
+        /*End console log*/
 
         User user = this.userService.registerDTOtoUser(registerDTO);
 
@@ -161,7 +210,7 @@ public class HomePageController {
         user.setPassword(hashPassword);
         user.setRole(this.userService.getRoleByName("USER"));
 
-        // this.userService.handleSaveUser(user);
+        this.userService.handleSaveUser(user);
         return "redirect:/login";
     }
 
@@ -182,6 +231,22 @@ public class HomePageController {
                 }
             });
             model.addAttribute("orders", orders);
+
+            /*Console log*/
+            System.out.println("------------------------Order history----------------------");
+            for (Order order : orders) {
+                System.out.println(">>>>> Order ID: " + order.getId());
+                System.out.println(">>>>> Total price: " + order.getTotalPrice());
+                System.out.println(">>>>> Status: " + order.getStatus());
+                System.out.println(">>>>> List order details: ");
+                for (OrderDetail od : order.getOrderDetails()) {
+                    System.out.println("    Product: " + od.getProduct().getName() + ", Price: " + od.getPrice() + ", Quantity: " + od.getQuantity());
+                }
+            }
+            
+            System.out.println("----------------------------------------------------");
+            /*End console log*/
+
         }
 
         return "client/cart/order-history";

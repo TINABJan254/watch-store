@@ -83,6 +83,13 @@ public class CartService {
 
                 product.setQuantity(product.getQuantity() - 1);
                 this.productService.handleSaveProduct(product);
+
+                /*Console log*/
+                System.out.println("--------------------------------------------------------------");
+                System.out.printf(">>>>> Added product with name = '%s' to cart \n", product.getName());
+                System.out.println("---------------------------------------------------------------");
+                /*End console log*/
+
             }
         }
     }
@@ -110,6 +117,12 @@ public class CartService {
                 this.cartRepository.save(cart);
                 session.setAttribute("sum", 0);
             }
+
+            /*Console log*/
+            System.out.println("--------------------------------------------------------------");
+            System.out.printf(">>>>> Deleted product with name = '%s' from cart \n", product.getName());
+            System.out.println("---------------------------------------------------------------");
+            /*End console log*/
 
         }
     }
@@ -164,6 +177,25 @@ public class CartService {
                     orderDetail.setProduct(cartDetail.getProduct());
                     this.orderDetailRepository.save(orderDetail);
                 }
+
+                /*Console log*/
+                System.out.println("--------------------------------------------------------------");
+                System.out.println(">>>>> Receiver: " + receiverName);
+                System.out.println(">>>>> Address: " + receiverAddress);
+                System.out.println(">>>>> Phone: " + receiverPhone);
+
+                double totalPrice = 0;
+                for (CartDetail cd : cartDetails) {
+                    totalPrice += cd.getPrice() * cd.getQuantity();
+                }
+                System.out.println(">>>>> Total price: " + totalPrice);
+
+                System.out.println(">>>>> List product: ");
+                for (CartDetail cd : cartDetails) {
+                    System.out.println("    Product: " + cd.getProduct().getName() + ", Price: " + cd.getPrice() + ", Quantity: " + cd.getQuantity());
+                }
+                System.out.println("---------------------------------------------------------------");
+                /*End console log*/
 
                 for (CartDetail cartDetail : cartDetails){
                     this.cartDetailRepository.deleteById(cartDetail.getId());

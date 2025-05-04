@@ -48,6 +48,16 @@ public class CartController {
         model.addAttribute("totalPrice", totalPrice);
         model.addAttribute("cart", cart);
 
+        /*Console log*/
+        System.out.println("-------------------------View cart----------------------------");
+        System.out.println(">>>>> List cart detail:"); 
+        for (CartDetail cd : cartDetails) {
+            System.out.println("    Product: " + cd.getProduct().getName() + ", Price: " + cd.getPrice()
+                + ", Quantity: " + cd.getQuantity());
+        }
+        System.out.println("---------------------------------------------------------------");
+        /*End console log*/
+
         return "client/cart/show";
     }
 
@@ -77,6 +87,17 @@ public class CartController {
         model.addAttribute("totalPrice", totalPrice);
         model.addAttribute("cart", cart);
 
+        /*Console log*/
+        System.out.println("------------------------Checkout infor--------------------------");
+        System.out.println(">>>>> Total price: " + totalPrice);
+        System.out.println(">>>>> List product:"); 
+        for (CartDetail cd : cartDetails) {
+            System.out.println("    Product: " + cd.getProduct().getName() + ", Price: " + cd.getPrice()
+                + ", Quantity: " + cd.getQuantity());
+        }
+        System.out.println("---------------------------------------------------------------");
+        /*End console log*/
+
         return "client/cart/checkout";
     }
 
@@ -98,6 +119,13 @@ public class CartController {
 
     @GetMapping("/order-success")
     public String getSuccessPage(){
+
+        /*Console log*/
+        System.out.println("--------------------------------------------------------------");
+        System.out.println(">>>>> Place order successfully");
+        System.out.println("---------------------------------------------------------------");
+        /*End console log*/
+
         return "client/cart/order-success";
     }
 
