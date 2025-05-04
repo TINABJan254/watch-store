@@ -95,7 +95,7 @@
                                             <label class="form-label">Factory:</label>
                                             <form:select class="form-select" path="factory">
                                                 <form:option value="APPLE">Apple</form:option>
-                                                <form:option value="CITZEN">Citizen</form:option>
+                                                <form:option value="CITIZEN">Citizen</form:option>
                                                 <form:option value="CASIO">Casio</form:option>
                                                 <form:option value="ROLEX">Rolex</form:option>
                                                 <form:option value="SEIKO">Seiko</form:option>
