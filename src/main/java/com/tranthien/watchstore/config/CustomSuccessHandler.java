@@ -37,6 +37,13 @@ public class CustomSuccessHandler implements AuthenticationSuccessHandler{
         final Collection<? extends GrantedAuthority> authorities = authentication.getAuthorities();
         for (final GrantedAuthority grantedAuthority : authorities) {
             String authorityName = grantedAuthority.getAuthority();
+
+            /*Console log*/
+            System.out.println("-----------------------------------------------------");
+            System.out.println(">>>>> User login with role = " + authorityName);
+            System.out.println("------------------------------------------------------");
+            /*End console log*/
+
             if (roleTargetUrlMap.containsKey(authorityName)) {
                 return roleTargetUrlMap.get(authorityName);
             }
