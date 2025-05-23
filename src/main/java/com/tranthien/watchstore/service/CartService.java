@@ -1,5 +1,6 @@
 package com.tranthien.watchstore.service;
 
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
 
@@ -166,6 +167,7 @@ public class CartService {
                 order.setReceiverAddress(receiverAddress);
                 order.setReceiverPhone(receiverPhone);
                 order.setStatus("PENDING");
+                order.setCreateTime(LocalDateTime.now());
 
                 order = this.orderRepository.save(order);
 
@@ -176,6 +178,12 @@ public class CartService {
                     orderDetail.setQuantity(cartDetail.getQuantity());
                     orderDetail.setProduct(cartDetail.getProduct());
                     this.orderDetailRepository.save(orderDetail);
+
+
+                    //update sold quantity
+                    Product p1 = this.productService.getProductById(cartDetail.getProduct().getId());
+                    p1.setSold(p1.getSold() + cartDetail.getQuantity()); 
+                    this.productService.handleSaveProduct(p1);
                 }
 
                 /*Console log*/

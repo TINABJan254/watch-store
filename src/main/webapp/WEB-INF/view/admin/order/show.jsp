@@ -51,6 +51,7 @@
                                                 <th>ID</th>
                                                 <th>Total price</th>
                                                 <th>User</th>
+                                                <th>Create time</th>
                                                 <th>Status</th>
                                                 <th>Action</th>
                                             </tr>
@@ -63,6 +64,7 @@
                                                         <fmt:formatNumber type="number" value="${order.totalPrice}" /> đ
                                                     </td>
                                                     <td>${order.user.fullName}</td>
+                                                    <td> <span class="createTime">${order.createTime}</span> </td>
                                                     <td>${order.status}</td>
                                                     <td>
                                                         <a href="/admin/order/${order.id}" class="btn btn-success">View</a>

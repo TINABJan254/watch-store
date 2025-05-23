@@ -1,5 +1,7 @@
 package com.tranthien.watchstore.controller.admin;
 
+import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
 import java.util.Optional;
 
@@ -53,8 +55,15 @@ public class OrderController {
         Pageable pageable = PageRequest.of(page - 1, limit);
 
         Page<Order> orderPage = this.orderService.fetchOrder(pageable);
-        List<Order> orders = orderPage.getContent();
+        List<Order> orders = new ArrayList<>(orderPage.getContent());
         
+        orders.sort(new Comparator<Order>() {
+            @Override
+            public int compare(Order o1, Order o2) {
+                return o2.getCreateTime().compareTo(o1.getCreateTime());
+            }
+        });
+
         model.addAttribute("orders", orders);
         model.addAttribute("currentPage", page);
         model.addAttribute("totalPages", orderPage.getTotalPages());

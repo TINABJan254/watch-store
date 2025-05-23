@@ -56,6 +56,7 @@
                                                 <th>Name</th>
                                                 <th>Price</th>
                                                 <th>Factory</th>
+                                                <th>Sold quantity</th>
                                                 <th>Action</th>
                                             </tr>
                                         </thead>
@@ -68,6 +69,7 @@
                                                         <fmt:formatNumber type="number" value="${product.price}" /> đ
                                                     </td>
                                                     <td>${product.factory}</td>
+                                                    <td>${product.sold}</td>
                                                     <td>
                                                         <a href="/admin/product/${product.id}" class="btn btn-success">View</a>
                                                         <a href="/admin/product/update/${product.id}" class="btn btn-warning mx-2">Update</a>

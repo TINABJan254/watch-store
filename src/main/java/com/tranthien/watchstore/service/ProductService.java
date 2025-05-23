@@ -8,8 +8,10 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 
+import com.tranthien.watchstore.domain.OrderDetail;
 import com.tranthien.watchstore.domain.Product;
 import com.tranthien.watchstore.domain.dto.ProductCriteriaDTO;
+import com.tranthien.watchstore.repository.OrderDetailRepository;
 import com.tranthien.watchstore.repository.ProductRepository;
 import com.tranthien.watchstore.service.specification.ProductSpecs;
 
@@ -17,9 +19,11 @@ import com.tranthien.watchstore.service.specification.ProductSpecs;
 public class ProductService {
 
     private final ProductRepository productRepository;
+    private final OrderDetailRepository orderDetailRepository;
 
-    public ProductService(ProductRepository productRepository) {
+    public ProductService(ProductRepository productRepository, OrderDetailRepository orderDetailRepository) {
         this.productRepository = productRepository;
+        this.orderDetailRepository = orderDetailRepository;
     }
 
     public Page<Product> fetchProduct(Pageable pageable) {
@@ -40,6 +44,17 @@ public class ProductService {
 
     public long countProducts() {
         return this.productRepository.count();
+    }
+
+    public long getSoldQuantity(Product product){
+        List<OrderDetail> orderDetails = this.orderDetailRepository.findAll();
+        long soldQuantity = 0;
+        for (OrderDetail orderDetail : orderDetails) {
+            if (product.getId() == orderDetail.getProduct().getId()){
+                soldQuantity += orderDetail.getQuantity();
+            }
+        }
+        return soldQuantity;
     }
 
     //Test
