@@ -16,6 +16,7 @@
     <link rel="stylesheet" href="admin/css/style.css">
 
     <!-- JavaScript để cập nhật giá trị id -->
+    <!-- This is branch thien2  -->
     <script>
         function setDeleteId(productId) {
             document.getElementById("deleteProductId").value = productId;
