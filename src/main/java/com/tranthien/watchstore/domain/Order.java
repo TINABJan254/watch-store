@@ -1,5 +1,6 @@
 package com.tranthien.watchstore.domain;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 import jakarta.persistence.Entity;
@@ -26,6 +27,8 @@ public class Order {
     private String receiverPhone;
 
     private String status;
+
+    private LocalDateTime createTime;
 
     @ManyToOne
     @JoinColumn(name = "user_id")
@@ -81,6 +84,14 @@ public class Order {
 
     public void setStatus(String status) {
         this.status = status;
+    }
+
+    public void setCreateTime(LocalDateTime createTime) {
+        this.createTime = createTime;
+    }
+
+    public LocalDateTime getCreateTime(){
+        return this.createTime;
     }
 
     public User getUser() {
