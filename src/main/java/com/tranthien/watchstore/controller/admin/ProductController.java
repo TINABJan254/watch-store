@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.tranthien.watchstore.domain.Product;
+import com.tranthien.watchstore.domain.dto.ProductDTO;
 import com.tranthien.watchstore.service.ProductService;
 import com.tranthien.watchstore.service.UploadFileService;
 
@@ -59,18 +60,21 @@ public class ProductController {
 
         
         Pageable pageable = PageRequest.of(page - 1, limit);
-        Page<Product> productPage = this.productService.fetchProduct(pageable);
-        List<Product> products = productPage.getContent();
+        // Page<Product> productPage = this.productService.fetchProduct(pageable);
+        // List<Product> products = productPage.getContent();
 
-        model.addAttribute("products", products);
+        Page<ProductDTO> productPage2 = this.productService.fetchProduct2(pageable);
+        List<ProductDTO> productDTOs = productPage2.getContent();
+
+        model.addAttribute("products", productDTOs);
         model.addAttribute("currentPage", page);
-        model.addAttribute("totalPages", productPage.getTotalPages());
+        model.addAttribute("totalPages", productPage2.getTotalPages());
         model.addAttribute("limit", limit);
 
         /*Console log*/
         System.out.println("---------------------------------------------------------------");
         System.out.println(">>>>> Limit: " + limit + ", page: " + page);
-        for (Product p : products) {
+        for (ProductDTO p : productDTOs) {
             System.out.println(">>>>> ID: " + p.getId() + ", Name: " + p.getName());
         }
         System.out.println("---------------------------------------------------------------");

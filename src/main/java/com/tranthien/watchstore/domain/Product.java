@@ -40,7 +40,7 @@ public class Product {
     @NotNull
     @Min(value = 0, message = "Quantiy must be greater than or equal to 0")
     private long quantity;
-    private long sold;
+    
 
     public long getId() {
         return id;
@@ -114,6 +114,7 @@ public class Product {
         this.quantity = quantity;
     }
 
+    private long sold;
     public long getSold() {
         return sold;
     }

@@ -179,11 +179,6 @@ public class CartService {
                     orderDetail.setProduct(cartDetail.getProduct());
                     this.orderDetailRepository.save(orderDetail);
 
-
-                    //update sold quantity
-                    Product p1 = this.productService.getProductById(cartDetail.getProduct().getId());
-                    p1.setSold(p1.getSold() + cartDetail.getQuantity()); 
-                    this.productService.handleSaveProduct(p1);
                 }
 
                 /*Console log*/

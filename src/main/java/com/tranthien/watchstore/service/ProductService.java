@@ -7,11 +7,9 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
-
-import com.tranthien.watchstore.domain.OrderDetail;
 import com.tranthien.watchstore.domain.Product;
 import com.tranthien.watchstore.domain.dto.ProductCriteriaDTO;
-import com.tranthien.watchstore.repository.OrderDetailRepository;
+import com.tranthien.watchstore.domain.dto.ProductDTO;
 import com.tranthien.watchstore.repository.ProductRepository;
 import com.tranthien.watchstore.service.specification.ProductSpecs;
 
@@ -19,11 +17,9 @@ import com.tranthien.watchstore.service.specification.ProductSpecs;
 public class ProductService {
 
     private final ProductRepository productRepository;
-    private final OrderDetailRepository orderDetailRepository;
 
-    public ProductService(ProductRepository productRepository, OrderDetailRepository orderDetailRepository) {
+    public ProductService(ProductRepository productRepository) {
         this.productRepository = productRepository;
-        this.orderDetailRepository = orderDetailRepository;
     }
 
     public Page<Product> fetchProduct(Pageable pageable) {
@@ -46,16 +42,32 @@ public class ProductService {
         return this.productRepository.count();
     }
 
-    public long getSoldQuantity(Product product){
-        List<OrderDetail> orderDetails = this.orderDetailRepository.findAll();
-        long soldQuantity = 0;
-        for (OrderDetail orderDetail : orderDetails) {
-            if (product.getId() == orderDetail.getProduct().getId()){
-                soldQuantity += orderDetail.getQuantity();
-            }
-        }
-        return soldQuantity;
+    // Fetch product with native sql
+    public Page<ProductDTO> fetchProduct2(Pageable pageable) {
+        Page<Object[]> result = this.productRepository.fetchProductWithNativeSQL(pageable);
+        Page<ProductDTO> products = result.map(row -> new ProductDTO(
+            ((Number) row[0]).longValue(),
+            (String) row[1],
+            ((Number) row[2]).doubleValue(),
+            (String) row[3],
+            ((row[4] != null) ? ((Number) row[4]).longValue() : 0L)
+        ));
+        return products;
     }
+
+    // Find top selling product
+    public Page<ProductDTO> findTopSellingProducts(Pageable pageable) {
+        Page<Object[]> result = this.productRepository.findTopSellingProducts(pageable);
+        Page<ProductDTO> topProductPage = result.map(row -> new ProductDTO(
+            ((Number) row[0]).longValue(),
+            (String) row[1],
+            ((Number) row[2]).doubleValue(),
+            (String) row[3],
+            ((Number) row[4]).longValue()
+        ));
+        return topProductPage;
+    }
+
 
     //Test
     public Page<Product> fetchProductByName(Pageable pageable, String productName) {
