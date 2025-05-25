@@ -114,13 +114,4 @@ public class Product {
         this.quantity = quantity;
     }
 
-    private long sold;
-    public long getSold() {
-        return sold;
-    }
-
-    public void setSold(long sold) {
-        this.sold = sold;
-    }
-    
 }
