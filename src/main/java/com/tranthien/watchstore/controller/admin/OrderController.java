@@ -8,6 +8,7 @@ import java.util.Optional;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -52,17 +53,17 @@ public class OrderController {
             // TODO: handle exception
         }
         
-        Pageable pageable = PageRequest.of(page - 1, limit);
+        Pageable pageable = PageRequest.of(page - 1, limit, Sort.by(Sort.Order.desc("createTime")));
 
         Page<Order> orderPage = this.orderService.fetchOrder(pageable);
         List<Order> orders = new ArrayList<>(orderPage.getContent());
         
-        orders.sort(new Comparator<Order>() {
-            @Override
-            public int compare(Order o1, Order o2) {
-                return o2.getCreateTime().compareTo(o1.getCreateTime());
-            }
-        });
+        // orders.sort(new Comparator<Order>() {
+        //     @Override
+        //     public int compare(Order o1, Order o2) {
+        //         return o2.getCreateTime().compareTo(o1.getCreateTime());
+        //     }
+        // });
 
         model.addAttribute("orders", orders);
         model.addAttribute("currentPage", page);

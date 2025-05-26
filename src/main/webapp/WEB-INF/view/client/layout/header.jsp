@@ -19,7 +19,7 @@
                 <c:out value = "${sessionScope.fullName}"/> 
                 <i class="arrow_carrot-down"></i></span>
             <ul>
-                <li>Tài khoản</li>
+                <li>Admin Dashboard</li>
                 <li>Lịch sử mua hàng</li>
                 <li>Đăng xuất</li>
             </ul>
@@ -58,7 +58,7 @@
                                 <span> <c:out value = "${sessionScope.fullName}"/></span>
                                 <ul>
                                     <li style="white-space: nowrap; text-align: center;">
-                                        <a style="color: #000000; font-size: 15px;" href="#">Tài khoản</a>
+                                        <a style="color: #000000; font-size: 15px;" href="/admin">Admin Dashboard</a>
                                     </li>
                                     <li style="white-space: nowrap; text-align: center;">
                                         <a style="color: #000000; font-size: 15px;" href="/order-history">Lịch sử mua hàng</a>
