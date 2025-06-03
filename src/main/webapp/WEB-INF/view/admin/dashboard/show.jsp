@@ -72,7 +72,7 @@
                                     <table class="table table-striped">
                                         <thead>
                                             <tr>
-                                                <th>ID</th>
+                                                <th>STT</th>
                                                 <th>Name</th>
                                                 <th>Price</th>
                                                 <th>Factory</th>
@@ -81,9 +81,9 @@
                                             </tr>
                                         </thead>
                                         <tbody>
-                                            <c:forEach var="product" items="${topProducts}">
+                                            <c:forEach var="product" items="${topProducts}" varStatus="status">
                                                 <tr>
-                                                    <th>${product.id}</th>
+                                                    <th>${status.count}</th>
                                                     <td>${product.name}</td>
                                                     <td>
                                                         <fmt:formatNumber type="number" value="${product.price}" /> đ
